@@ -1,0 +1,11 @@
+1730839473670	Delete element
+1730839497460	Delete element
+1730924929987	Move package
+1730924970748	Delete element
+1730925109755	Rename compilation unit 'Gestion.java'
+1730925669257	Rename local variable 'dbName'
+1731087306125	Rename type 'controladorBBDD'
+1731099041374	Extract method 'actualizarTabla'
+1731099099554	Extract method 'actualizarBBDD'
+1731099119407	Extract method 'actualizarRegistros'
+1731099161291	Extract method 'actualizarMenu'

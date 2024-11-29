@@ -1,0 +1,11 @@
+1728409166617	Rename compilation unit 'ControladorBoton.java'
+1728421412829	Rename field 'tablero'
+1728421506536	Rename field 'casillas'
+1728424752244	Rename package 'Vista'
+1728424823168	Rename package 'Controlador'
+1728424934286	Delete element
+1728425072170	Rename type 'main'
+1728425723140	Delete element
+1728575400343	Rename local variable 'alrededores'
+1728576627500	Extract method 'extracted'
+1728581355656	Delete element
