@@ -43,7 +43,7 @@ public abstract class EjemplarDao {
         em.persist(ejemplar);
         em.getTransaction().commit();
         return true;
-    }
+    }EQWTQERWTGQRGQRG
     public static boolean update(Ejemplar ejemplar) {
         em.getTransaction().begin();
         em.merge(ejemplar);
