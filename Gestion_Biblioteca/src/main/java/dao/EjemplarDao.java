@@ -5,15 +5,20 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.io.DataOutput;
 import java.util.ArrayList;
-import java.util.List;
 
-public abstract class EjemplarDao {
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("biblioteca");
+public abstract class EjemplarDao implements DAO {
+    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("Biblioteca");
     private static EntityManager em = emf.createEntityManager();
+    private static final Class<Ejemplar> clase = Ejemplar.class;
 
-    public static Ejemplar findEjemplar(Ejemplar e) {
-        return em.find(Ejemplar.class, e);
+    public static boolean findEjemplar(Ejemplar e) {
+        if (em.find(clase,e)!=null) {
+            return true;
+        }else {
+            return false;
+        }
     }
     public static ArrayList<Ejemplar> getEjemplares() {
         em.getTransaction().begin();
@@ -52,7 +57,9 @@ public abstract class EjemplarDao {
     }
     public static boolean delete(Ejemplar ejemplar) {
         em.getTransaction().begin();
-        em.remove(ejemplar);
+        if (findEjemplar(ejemplar)) {
+            em.remove(ejemplar);
+        }
         em.getTransaction().commit();
         return true;
     }
