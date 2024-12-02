@@ -2,6 +2,7 @@ package dao;
 
 import dto.Ejemplar;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 
 import java.sql.ResultSet;
@@ -9,29 +10,60 @@ import java.util.ArrayList;
 
 public interface DAO {
 
-    public default Object read(int id){
+    public default ObjetoGenerico read(int id){
         EntityManager em = getEntityManager();
-        return em.find(getClase(), id);
+        return new ObjetoGenerico(em.find(getClase(), id),getClase());
     };
 
-    public default ArrayList<Object> readBy(ArrayList<String> campos,ArrayList<String> valores){
+    public default ArrayList<ObjetoGenerico> readBy(ArrayList<String> campos,ArrayList<String> valores){
         EntityManager em = getEntityManager();
         String query = "select * from "+getClase().getName()+" where ";
         int i = 0;
         while(i<campos.size()-1){
-            query += campos.get(i) + " = "+valores.get(i)+" AND ";
+            query += "? = ? AND ";
             i++;
         }
         i++;
-        query += campos.get(i) + " = "+valores.get(i);
-        TypedQuery<?> query1 = em.createQuery(query, getClase());
+        query += "? = ?";
+
+        Query sentencia = em.createNativeQuery(query, getClase());
+        for(int j=1;j<campos.size();j=j+2){
+            sentencia.setParameter(j,campos.get(j));
+        }
+        for(int j=2;j<valores.size();j=j+2){
+            sentencia.setParameter(j,valores.get(j));
+        }
+        ArrayList<ObjetoGenerico> resultado = new ArrayList<>();
+        ArrayList<Object> instancias = (ArrayList<Object>) sentencia.getResultList();
+        for(Object o : instancias){
+            resultado.add(new ObjetoGenerico(o,getClase()));
+        }
+        return resultado;
     };
 
-    public boolean insert();
+    public default boolean insert(ObjetoGenerico objetoGenerico){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.persist(objetoGenerico.getClase().cast(objetoGenerico.getInstancia()));
+        em.getTransaction().commit();
+        return true;
+    };
 
-    public boolean update();
+    public default boolean update(ObjetoGenerico objetoGenerico){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.merge(objetoGenerico.getClase().cast(objetoGenerico.getInstancia()));
+        em.getTransaction().commit();
+        return true;
+    };
 
-    public boolean delete();
+    public default boolean delete(ObjetoGenerico objetoGenerico){
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.remove(objetoGenerico.getClase().cast(objetoGenerico.getInstancia()));
+        em.getTransaction().commit();
+        return true;
+    };
 
     public Class<?> getClase();
 
