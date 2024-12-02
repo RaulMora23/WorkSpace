@@ -1,5 +1,6 @@
 package dto;
 
+import dao.LibroDao;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
@@ -34,7 +35,12 @@ public class Ejemplar {
 
     public Ejemplar() {}
 
-    public Ejemplar(Libro isbn, String estado) {
+    public Ejemplar(int id, String isbn, String estado) {
+        setId(id);
+        setIsbn(isbn);
+        setEstado(estado);
+    }
+    public Ejemplar(String isbn, String estado) {
         setIsbn(isbn);
         setEstado(estado);
     }
@@ -51,8 +57,8 @@ public class Ejemplar {
         return isbn;
     }
 
-    public void setIsbn(dto.Libro isbn) {
-        this.isbn = isbn;
+    public void setIsbn(String isbn) {
+        this.isbn = (Libro) new LibroDao().read(isbn).getInstancia();
     }
 
     public String getEstado() {
@@ -61,7 +67,7 @@ public class Ejemplar {
 
     public void setEstado(String estado) {
         if(estados.contains(estado.toUpperCase())) {
-            this.estado = estado;
+            this.estado = estado.toUpperCase();
         }
     }
 

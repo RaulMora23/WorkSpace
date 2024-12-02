@@ -14,6 +14,10 @@ public interface DAO {
         EntityManager em = getEntityManager();
         return new ObjetoGenerico(em.find(getClase(), id),getClase());
     };
+    public default ObjetoGenerico read(String id){
+        EntityManager em = getEntityManager();
+        return new ObjetoGenerico(em.find(getClase(), id),getClase());
+    };
 
     public default ArrayList<ObjetoGenerico> readBy(ArrayList<String> campos,ArrayList<String> valores){
         EntityManager em = getEntityManager();

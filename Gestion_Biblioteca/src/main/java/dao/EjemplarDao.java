@@ -8,9 +8,18 @@ import jakarta.persistence.Persistence;
 import java.io.DataOutput;
 import java.util.ArrayList;
 
-public abstract class EjemplarDao implements DAO {
-    private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("Biblioteca");
-    private static EntityManager em = emf.createEntityManager();
-    private static final Class<Ejemplar> clase = Ejemplar.class;
+public class EjemplarDao implements DAO {
+    private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("biblioteca");
+    private final EntityManager em = emf.createEntityManager();
+    private final Class<Ejemplar> clase = Ejemplar.class;
 
+    @Override
+    public Class<?> getClase() {
+        return clase;
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return em;
+    }
 }

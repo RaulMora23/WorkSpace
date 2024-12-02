@@ -19,7 +19,15 @@ public class Libro {
     private String autor;
 
     @OneToMany(mappedBy = "isbn")
-    private Set<Ejemplar> ejemplars = new LinkedHashSet<>();
+    private Set<Ejemplar> ejemplares = new LinkedHashSet<>();
+
+    public Libro() {};
+
+    public Libro(String isbn, String titulo, String autor) {
+        setIsbn(isbn);
+        setTitulo(titulo);
+        setAutor(autor);
+    }
 
     public String getIsbn() {
         return isbn;
@@ -45,12 +53,12 @@ public class Libro {
         this.autor = autor;
     }
 
-    public Set<Ejemplar> getEjemplars() {
-        return ejemplars;
+    public Set<Ejemplar> getEjemplares() {
+        return ejemplares;
     }
 
-    public void setEjemplars(Set<Ejemplar> ejemplars) {
-        this.ejemplars = ejemplars;
+    public void setEjemplares(Set<Ejemplar> ejemplars) {
+        this.ejemplares = ejemplars;
     }
 
 }

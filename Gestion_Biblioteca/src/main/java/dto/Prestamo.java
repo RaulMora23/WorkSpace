@@ -1,5 +1,7 @@
 package dto;
 
+import dao.EjemplarDao;
+import dao.UsuarioDao;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -30,6 +32,22 @@ public class Prestamo {
     @Column(name = "fechaDevolucion")
     private LocalDate fechaDevolucion;
 
+    public Prestamo() {};
+
+    public Prestamo(int idUsuario, int idEjemplar, LocalDate fechaInicio, LocalDate fechaDevolucion) {
+        setUsuario(idUsuario);
+        setEjemplar(idEjemplar);
+        setFechaInicio(fechaInicio);
+        setFechaDevolucion(fechaDevolucion);
+    }
+    public Prestamo(int id,int idUsuario, int idEjemplar, LocalDate fechaInicio, LocalDate fechaDevolucion) {
+        setId(id);
+        setUsuario(idUsuario);
+        setEjemplar(idEjemplar);
+        setFechaInicio(fechaInicio);
+        setFechaDevolucion(fechaDevolucion);
+    }
+
     public Integer getId() {
         return id;
     }
@@ -42,16 +60,16 @@ public class Prestamo {
         return usuario;
     }
 
-    public void setUsuario(dto.Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuario(int idUsuario) {
+        this.usuario = (Usuario) new UsuarioDao().read(idUsuario).getInstancia();
     }
 
     public Ejemplar getEjemplar() {
         return ejemplar;
     }
 
-    public void setEjemplar(Ejemplar ejemplar) {
-        this.ejemplar = ejemplar;
+    public void setEjemplar(int idEjemplar) {
+        this.ejemplar = (Ejemplar) new EjemplarDao().read(idEjemplar).getInstancia();
     }
 
     public LocalDate getFechaInicio() {
