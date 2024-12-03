@@ -11,7 +11,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "ejemplar")
+@Table(name = "Ejemplar")
 public class Ejemplar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -79,4 +79,11 @@ public class Ejemplar {
         this.prestamos = prestamos;
     }
 
+    @Override
+    public String toString() {
+        return "Ejemplar:" +
+                "id=" + id +
+                ", isbn=" + isbn +
+                ", estado='" + estado;
+    }
 }
