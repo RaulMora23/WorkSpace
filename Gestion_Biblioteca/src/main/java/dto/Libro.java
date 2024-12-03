@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "libro")
+@Table(name = "Libro")
 public class Libro {
     @Id
     @Column(name = "isbn", nullable = false, length = 20)
@@ -61,4 +61,12 @@ public class Libro {
         this.ejemplares = ejemplars;
     }
 
+    @Override
+    public String toString() {
+        return "Libro:" +
+                "isbn='" + isbn + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", autor='" + autor + '\'' +
+                ", ejemplares=" + ejemplares.size();
+    }
 }

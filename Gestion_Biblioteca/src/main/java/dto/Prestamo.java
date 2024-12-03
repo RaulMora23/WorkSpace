@@ -9,7 +9,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "prestamo")
+@Table(name = "Prestamo")
 public class Prestamo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,18 +34,16 @@ public class Prestamo {
 
     public Prestamo() {};
 
-    public Prestamo(int idUsuario, int idEjemplar, LocalDate fechaInicio, LocalDate fechaDevolucion) {
+    public Prestamo(int idUsuario, int idEjemplar, LocalDate fechaInicio) {
         setUsuario(idUsuario);
         setEjemplar(idEjemplar);
-        setFechaInicio(fechaInicio);
-        setFechaDevolucion(fechaDevolucion);
+        setFechaInicio();
     }
-    public Prestamo(int id,int idUsuario, int idEjemplar, LocalDate fechaInicio, LocalDate fechaDevolucion) {
+    public Prestamo(int id,int idUsuario, int idEjemplar, LocalDate fechaInicio) {
         setId(id);
         setUsuario(idUsuario);
         setEjemplar(idEjemplar);
-        setFechaInicio(fechaInicio);
-        setFechaDevolucion(fechaDevolucion);
+        setFechaInicio();
     }
 
     public Integer getId() {
@@ -76,8 +74,8 @@ public class Prestamo {
         return fechaInicio;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setFechaInicio() {
+        this.fechaInicio = LocalDate.now();
     }
 
     public LocalDate getFechaDevolucion() {
@@ -86,6 +84,18 @@ public class Prestamo {
 
     public void setFechaDevolucion(LocalDate fechaDevolucion) {
         this.fechaDevolucion = fechaDevolucion;
+        if(fechaDevolucion.isAfter(fechaDevolucion.plusDays(15))){
+            getUsuario().setPenalizacionHasta(getUsuario().getPenalizacionHasta().plusDays(15));
+        }
     }
 
+    @Override
+    public String toString() {
+        return "Prestamo:" +
+                "id=" + id +
+                ", usuario=" + usuario +
+                ", ejemplar=" + ejemplar +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaDevolucion=" + fechaDevolucion;
+    }
 }
