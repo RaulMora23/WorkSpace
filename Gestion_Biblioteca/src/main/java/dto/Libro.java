@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "Libro")
+@Table(name = "libro")
 public class Libro {
     @Id
     @Column(name = "isbn", nullable = false, length = 20)
@@ -57,8 +57,8 @@ public class Libro {
         return ejemplares;
     }
 
-    public void setEjemplares(Set<Ejemplar> ejemplars) {
-        this.ejemplares = ejemplars;
+    public void setEjemplares(Set<Ejemplar> ejemplares) {
+        this.ejemplares = ejemplares;
     }
 
     @Override

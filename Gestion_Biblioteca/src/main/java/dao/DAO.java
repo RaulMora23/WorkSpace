@@ -7,6 +7,7 @@ import jakarta.persistence.TypedQuery;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 public interface DAO {
 
@@ -19,31 +20,39 @@ public interface DAO {
         return new ObjetoGenerico(em.find(getClase(), id),getClase());
     };
 
-    public default ArrayList<ObjetoGenerico> readBy(ArrayList<String> campos,ArrayList<String> valores){
+    public default ArrayList<ObjetoGenerico> readBy(ArrayList<String> campos, ArrayList<String> valores) {
         EntityManager em = getEntityManager();
-        String query = "select * from "+getClase().getName()+" where ";
-        int i = 0;
-        while(i<campos.size()-1){
-            query += "? = ? AND ";
-            i++;
-        }
-        i++;
-        query += "? = ?";
 
-        Query sentencia = em.createNativeQuery(query, getClase());
-        for(int j=1;j<campos.size();j=j+2){
-            sentencia.setParameter(j,campos.get(j));
+        // Construcción dinámica de la consulta SQL
+        StringBuilder query = new StringBuilder("select * from " + getClase().getSimpleName() + " where ");
+
+        // Iterar sobre campos y valores para crear las condiciones WHERE
+        for (int i = 0; i < campos.size(); i++) {
+            query.append(campos.get(i)).append(" = ?");  // Agregar cada condición
+            if (i < campos.size() - 1) {
+                query.append(" AND ");  // Agregar el "AND" entre condiciones
+            }
         }
-        for(int j=2;j<valores.size();j=j+2){
-            sentencia.setParameter(j,valores.get(j));
+
+        // Crear la consulta nativa
+        Query sentencia = em.createNativeQuery(query.toString(), getClase());
+
+        // Asignar los valores de los parámetros en la consulta
+        for (int i = 0; i < campos.size(); i++) {
+            sentencia.setParameter(i + 1, valores.get(i));  // Usar i + 1 para el índice de parámetro
         }
+
+        // Ejecutar la consulta y convertir los resultados a una lista de ObjetoGenerico
         ArrayList<ObjetoGenerico> resultado = new ArrayList<>();
-        ArrayList<Object> instancias = (ArrayList<Object>) sentencia.getResultList();
-        for(Object o : instancias){
-            resultado.add(new ObjetoGenerico(o,getClase()));
+        List<Object> instancias = sentencia.getResultList();
+
+        // Convertir las instancias a ObjetoGenerico y agregarlas a la lista de resultados
+        for (Object o : instancias) {
+            resultado.add(new ObjetoGenerico(o, getClase()));
         }
+
         return resultado;
-    };
+    }
 
     public default boolean insert(ObjetoGenerico objetoGenerico){
         EntityManager em = getEntityManager();

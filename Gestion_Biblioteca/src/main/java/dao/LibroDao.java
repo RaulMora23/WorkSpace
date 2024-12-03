@@ -6,6 +6,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
+import java.util.ArrayList;
+
 public class LibroDao implements DAO {
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("biblioteca");
     private final EntityManager em = emf.createEntityManager();
@@ -20,4 +22,5 @@ public class LibroDao implements DAO {
     public EntityManager getEntityManager() {
         return em;
     }
+
 }
