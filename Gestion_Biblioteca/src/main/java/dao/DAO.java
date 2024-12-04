@@ -20,6 +20,24 @@ public interface DAO {
         return new ObjetoGenerico(em.find(getClase(), id),getClase());
     };
 
+    public default ArrayList<ObjetoGenerico> readAll() {
+        EntityManager em = getEntityManager();
+
+        // Construcción dinámica de la consulta SQL
+        String query = "select * from " + getClase().getSimpleName();
+
+        // Ejecutar la consulta y convertir los resultados a una lista de ObjetoGenerico
+        ArrayList<ObjetoGenerico> resultado = new ArrayList<>();
+        List<Object> instancias = (List<Object>) em.createNativeQuery(query, getClase()).getResultList();
+
+        // Convertir las instancias a ObjetoGenerico y agregarlas a la lista de resultados
+        for (Object o : instancias) {
+            resultado.add(new ObjetoGenerico(o, getClase()));
+        }
+
+        return resultado;
+    }
+
     public default ArrayList<ObjetoGenerico> readBy(ArrayList<String> campos, ArrayList<String> valores) {
         EntityManager em = getEntityManager();
 
@@ -81,6 +99,8 @@ public interface DAO {
     public Class<?> getClase();
 
     public EntityManager getEntityManager();
+
+//    public Object castObject(Object objeto);
 
 
 }

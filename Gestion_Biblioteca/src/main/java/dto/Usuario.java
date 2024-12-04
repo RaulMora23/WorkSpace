@@ -1,5 +1,9 @@
 package dto;
 
+import dao.DAO;
+import dao.ObjetoGenerico;
+import dao.PrestamoDao;
+import dao.UsuarioDao;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -7,8 +11,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "usuario")
-public class Usuario {
+@Table(name = "Usuario")
+public class Usuario implements Comparable<Usuario> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -53,6 +57,17 @@ public class Usuario {
         setEmail(email);
         setPassword(password);
         setTipo(tipo);
+    }
+
+    public Usuario(Object o){
+        Usuario usuario = (Usuario) o;
+        this.id = usuario.getId();
+        this.dni = usuario.getDni();
+        this.nombre = usuario.getNombre();
+        this.email = usuario.getEmail();
+        this.password = usuario.getPassword();
+        this.tipo = usuario.getTipo();
+        this.prestamos=usuario.getPrestamos();
     }
 
     public Integer getId() {
@@ -119,6 +134,29 @@ public class Usuario {
         this.prestamos = prestamos;
     }
 
+    public void actualizarRegistro(){
+        DAO dao = new UsuarioDao();
+        dao.update(new ObjetoGenerico(this, getClass()));
+    }
+    //Si da true hay penalizacion
+    public boolean devolverPrestamo(Prestamo prestamo) {
+        boolean sancion = false;
+        if(this.prestamos.contains(prestamo)) {
+            System.out.println("Esta contenido");
+           sancion = prestamo.setFechaDevolucion();
+           if (sancion) {
+               if (this.getPenalizacionHasta()==null){
+                   this.setPenalizacionHasta(LocalDate.now().plusDays(15));
+               }else{
+                   this.setPenalizacionHasta(getPenalizacionHasta().plusDays(15));
+               }
+               return true;
+           }
+           return false;
+       }
+       return false;
+    }
+
     @Override
     public String toString() {
         return "Usuario:" +
@@ -130,4 +168,15 @@ public class Usuario {
                 ", tipo='" + tipo + '\'' +
                 ", penalizacionHasta=" + penalizacionHasta;
     }
+
+    @Override
+    public int compareTo(Usuario o) {
+        return this.dni.compareTo(o.getDni());
+    }
+    @Override
+    public boolean equals(Object o) {
+        Usuario usuario = (Usuario) o;
+        return id.equals(usuario.getId()) && dni.equals(usuario.getDni()) && nombre.equals(usuario.getNombre()) && email.equals(usuario.getEmail()) && password.equals(usuario.getPassword()) && tipo.equals(usuario.getTipo()) && penalizacionHasta.equals(usuario.getPenalizacionHasta());
+    }
+
 }

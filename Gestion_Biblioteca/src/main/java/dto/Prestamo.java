@@ -1,7 +1,6 @@
 package dto;
 
-import dao.EjemplarDao;
-import dao.UsuarioDao;
+import dao.*;
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -9,8 +8,8 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "prestamo")
-public class Prestamo {
+@Table(name = "Prestamo")
+public class Prestamo implements Comparable<Prestamo> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -34,16 +33,25 @@ public class Prestamo {
 
     public Prestamo() {};
 
-    public Prestamo(int idUsuario, int idEjemplar, LocalDate fechaInicio) {
+    public Prestamo(int idUsuario, int idEjemplar) {
         setUsuario(idUsuario);
         setEjemplar(idEjemplar);
         setFechaInicio();
     }
-    public Prestamo(int id,int idUsuario, int idEjemplar, LocalDate fechaInicio) {
+    public Prestamo(int id,int idUsuario, int idEjemplar) {
         setId(id);
         setUsuario(idUsuario);
         setEjemplar(idEjemplar);
         setFechaInicio();
+    }
+
+    public Prestamo(Object instancia) {
+        Prestamo prestamo = (Prestamo) instancia;
+        this.id = prestamo.getId();
+        this.usuario = prestamo.getUsuario();
+        this.ejemplar = prestamo.getEjemplar();
+        this.fechaInicio = prestamo.getFechaInicio();
+        this.fechaDevolucion = prestamo.getFechaDevolucion();
     }
 
     public Integer getId() {
@@ -82,20 +90,35 @@ public class Prestamo {
         return fechaDevolucion;
     }
 
-    public void setFechaDevolucion(LocalDate fechaDevolucion) {
-        this.fechaDevolucion = fechaDevolucion;
-        if(fechaDevolucion.isAfter(fechaDevolucion.plusDays(15))){
-            getUsuario().setPenalizacionHasta(getUsuario().getPenalizacionHasta().plusDays(15));
+    public boolean setFechaDevolucion() {
+        if (fechaDevolucion == null) {
+            this.fechaDevolucion = LocalDate.now();
+            return fechaDevolucion.isAfter(fechaDevolucion.plusDays(15));
         }
+        return false;
+    }
+
+    public void actualizarRegistro(){
+        DAO dao = new PrestamoDao();
+        dao.update(new ObjetoGenerico(this, getClass()));
     }
 
     @Override
     public String toString() {
         return "Prestamo:" +
                 "id=" + id +
-                ", usuario=" + usuario +
-                ", ejemplar=" + ejemplar +
+                ", usuario=" + usuario.getId() +
+                ", ejemplar=" + ejemplar.getIsbn().getTitulo() +
                 ", fechaInicio=" + fechaInicio +
                 ", fechaDevolucion=" + fechaDevolucion;
+    }
+
+    @Override
+    public int compareTo(Prestamo o) {
+        return id.compareTo(o.getId());
+    }
+    @Override
+    public boolean equals(Object o) {
+        return compareTo((Prestamo) o) == 0;
     }
 }

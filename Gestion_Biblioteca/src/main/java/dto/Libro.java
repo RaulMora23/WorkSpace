@@ -1,13 +1,17 @@
 package dto;
 
+import dao.DAO;
+import dao.LibroDao;
+import dao.ObjetoGenerico;
+import dao.UsuarioDao;
 import jakarta.persistence.*;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "libro")
-public class Libro {
+@Table(name = "Libro")
+public class Libro implements Comparable<Libro> {
     @Id
     @Column(name = "isbn", nullable = false, length = 20)
     private String isbn;
@@ -27,6 +31,13 @@ public class Libro {
         setIsbn(isbn);
         setTitulo(titulo);
         setAutor(autor);
+    }
+    public Libro(Object o){
+        Libro libro = (Libro) o;
+        setIsbn(libro.getIsbn());
+        setTitulo(libro.getTitulo());
+        setAutor(libro.getAutor());
+        this.ejemplares.addAll(libro.getEjemplares());
     }
 
     public String getIsbn() {
@@ -61,12 +72,33 @@ public class Libro {
         this.ejemplares = ejemplares;
     }
 
+    public int getEjemplaresDisponibles() {
+        int ejemplaresDisponibles = 0;
+        for (Ejemplar e : ejemplares) {
+            if (e.getEstado().equals("DISPONIBLE")) {
+                ejemplaresDisponibles++;
+            }
+        }
+        return ejemplaresDisponibles;
+    }
+
+    public void actualizarRegistro(){
+        DAO dao = new LibroDao();
+        dao.update(new ObjetoGenerico(this, getClass()));
+    }
+
     @Override
     public String toString() {
         return "Libro:" +
                 "isbn='" + isbn + '\'' +
                 ", titulo='" + titulo + '\'' +
                 ", autor='" + autor + '\'' +
-                ", ejemplares=" + ejemplares.size();
+                ", ejemplares=" + ejemplares.size() +
+                ", disponibles=" + getEjemplaresDisponibles();
+    }
+
+    @Override
+    public int compareTo(Libro o) {
+        return isbn.compareTo(o.getIsbn());
     }
 }

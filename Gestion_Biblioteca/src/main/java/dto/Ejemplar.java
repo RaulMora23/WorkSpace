@@ -1,6 +1,6 @@
 package dto;
 
-import dao.LibroDao;
+import dao.*;
 import jakarta.persistence.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
@@ -11,8 +11,8 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "ejemplar")
-public class Ejemplar {
+@Table(name = "Ejemplar")
+public class Ejemplar implements Comparable<Ejemplar> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -43,6 +43,13 @@ public class Ejemplar {
     public Ejemplar(String isbn, String estado) {
         setIsbn(isbn);
         setEstado(estado);
+    }
+    public Ejemplar(Object o){
+        Ejemplar e = (Ejemplar) o;
+        setId(e.getId());
+        setEstado(e.getEstado());
+        this.isbn = e.getIsbn();
+        this.prestamos=e.getPrestamos();
     }
 
     public Integer getId() {
@@ -79,11 +86,21 @@ public class Ejemplar {
         this.prestamos = prestamos;
     }
 
+    public void actualizarRegistro(){
+        DAO dao = new EjemplarDao();
+        dao.update(new ObjetoGenerico(this, getClass()));
+    }
+
     @Override
     public String toString() {
         return "Ejemplar:" +
                 "id=" + id +
-                ", isbn=" + isbn +
+                ", isbn=" + isbn.getTitulo() +
                 ", estado='" + estado;
+    }
+
+    @Override
+    public int compareTo(Ejemplar o) {
+        return id.compareTo(o.getId());
     }
 }

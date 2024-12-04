@@ -10,6 +10,7 @@ public class ObjetoGenerico {
     public Object getInstancia() {
         return instancia;
     }
+
     public Class<?> getClase() {
         return clase;
     }
