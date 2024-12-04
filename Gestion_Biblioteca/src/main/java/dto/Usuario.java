@@ -7,7 +7,9 @@ import dao.UsuarioDao;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -40,6 +42,8 @@ public class Usuario implements Comparable<Usuario> {
     @OneToMany(mappedBy = "usuario")
     private Set<Prestamo> prestamos = new LinkedHashSet<>();
 
+    private static Set<String> tipos = Set.of("administrador", "normal");
+
     public Usuario() {};
 
     public Usuario(String dni, String nombre, String email, String password, String tipo) {
@@ -48,6 +52,7 @@ public class Usuario implements Comparable<Usuario> {
         setEmail(email);
         setPassword(password);
         setTipo(tipo);
+        setPrestamos();
     }
 
     public Usuario(Integer id, String dni, String nombre, String email, String password, String tipo) {
@@ -115,7 +120,9 @@ public class Usuario implements Comparable<Usuario> {
     }
 
     public void setTipo(String tipo) {
-        this.tipo = tipo;
+        if(tipos.contains(tipo)) {
+            this.tipo = tipo;
+        }
     }
 
     public LocalDate getPenalizacionHasta() {
@@ -130,8 +137,11 @@ public class Usuario implements Comparable<Usuario> {
         return prestamos;
     }
 
-    public void setPrestamos(Set<Prestamo> prestamos) {
-        this.prestamos = prestamos;
+    public void setPrestamos() {
+        DAO dao = new PrestamoDao();
+        ArrayList<Prestamo> arrayList = dao.readBy("usuario_id",String.valueOf(id));
+        prestamos.clear();
+        prestamos.addAll(arrayList);
     }
 
     public void actualizarRegistro(){
@@ -141,15 +151,18 @@ public class Usuario implements Comparable<Usuario> {
     //Si da true hay penalizacion
     public boolean devolverPrestamo(Prestamo prestamo) {
         boolean sancion = false;
-        if(this.prestamos.contains(prestamo)) {
+        System.out.println(this.prestamos.contains(prestamo));
+        if(this.prestamos.contains(prestamo)||this.tipo.equals("administrador")) {
             System.out.println("Esta contenido");
            sancion = prestamo.setFechaDevolucion();
+           prestamo.actualizarRegistro();
            if (sancion) {
                if (this.getPenalizacionHasta()==null){
                    this.setPenalizacionHasta(LocalDate.now().plusDays(15));
                }else{
                    this.setPenalizacionHasta(getPenalizacionHasta().plusDays(15));
                }
+               actualizarRegistro();
                return true;
            }
            return false;
@@ -175,8 +188,14 @@ public class Usuario implements Comparable<Usuario> {
     }
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
         return id.equals(usuario.getId()) && dni.equals(usuario.getDni()) && nombre.equals(usuario.getNombre()) && email.equals(usuario.getEmail()) && password.equals(usuario.getPassword()) && tipo.equals(usuario.getTipo()) && penalizacionHasta.equals(usuario.getPenalizacionHasta());
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, dni, nombre, email, password, tipo, penalizacionHasta);
     }
 
 }

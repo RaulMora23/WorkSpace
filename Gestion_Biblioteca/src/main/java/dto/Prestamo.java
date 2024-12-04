@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "Prestamo")
@@ -18,18 +19,23 @@ public class Prestamo implements Comparable<Prestamo> {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "usuario_id", nullable = false)
-    private dto.Usuario usuario;
+    private Usuario usuario;
+
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ejemplar_id", nullable = false)
     private Ejemplar ejemplar;
 
+
     @Column(name = "fechaInicio", nullable = false)
     private LocalDate fechaInicio;
 
     @Column(name = "fechaDevolucion")
     private LocalDate fechaDevolucion;
+
+    private int ejemplarID;
+    private int usuarioID;
 
     public Prestamo() {};
 
@@ -41,7 +47,9 @@ public class Prestamo implements Comparable<Prestamo> {
     public Prestamo(int id,int idUsuario, int idEjemplar) {
         setId(id);
         setUsuario(idUsuario);
+        setUsuarioID();
         setEjemplar(idEjemplar);
+        setEjemplarID();
         setFechaInicio();
     }
 
@@ -54,6 +62,7 @@ public class Prestamo implements Comparable<Prestamo> {
         this.fechaDevolucion = prestamo.getFechaDevolucion();
     }
 
+
     public Integer getId() {
         return id;
     }
@@ -62,12 +71,26 @@ public class Prestamo implements Comparable<Prestamo> {
         this.id = id;
     }
 
+
+
+
+
+
+
     public dto.Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(int idUsuario) {
-        this.usuario = (Usuario) new UsuarioDao().read(idUsuario).getInstancia();
+        this.usuario = (Usuario) new UsuarioDao().read(idUsuario);
+    }
+
+    public int getUsuarioID() {
+        return usuarioID;
+    }
+
+    public void setUsuarioID() {
+        this.usuarioID = usuario.getId();
     }
 
     public Ejemplar getEjemplar() {
@@ -75,7 +98,15 @@ public class Prestamo implements Comparable<Prestamo> {
     }
 
     public void setEjemplar(int idEjemplar) {
-        this.ejemplar = (Ejemplar) new EjemplarDao().read(idEjemplar).getInstancia();
+        this.ejemplar = (Ejemplar) new EjemplarDao().read(idEjemplar);
+    }
+
+    public int getEjemplarID() {
+        return ejemplarID;
+    }
+
+    public void setEjemplarID() {
+        this.ejemplarID = ejemplar.getId();
     }
 
     public LocalDate getFechaInicio() {
@@ -119,6 +150,16 @@ public class Prestamo implements Comparable<Prestamo> {
     }
     @Override
     public boolean equals(Object o) {
-        return compareTo((Prestamo) o) == 0;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Prestamo prestamo = (Prestamo) o;
+        System.out.println(Objects.equals(id, prestamo.getId()));
+        System.out.println(Objects.equals(usuario.getId(), prestamo.getUsuario().getId()));
+        return (Objects.equals(id, prestamo.getId()) && Objects.equals(usuarioID, prestamo.getUsuarioID()) &&
+                Objects.equals(ejemplarID,prestamo.getEjemplarID()) && fechaInicio.equals(prestamo.getFechaInicio()));
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, usuarioID, ejemplarID, fechaInicio);
     }
 }

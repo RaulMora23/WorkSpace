@@ -65,7 +65,7 @@ public class Ejemplar implements Comparable<Ejemplar> {
     }
 
     public void setIsbn(String isbn) {
-        this.isbn = (Libro) new LibroDao().read(isbn).getInstancia();
+        this.isbn = (Libro) new LibroDao().read(isbn);
     }
 
     public String getEstado() {

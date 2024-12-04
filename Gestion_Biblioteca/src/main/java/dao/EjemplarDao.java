@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class EjemplarDao implements DAO {
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("biblioteca");
     private final EntityManager em = emf.createEntityManager();
-    private final Class<Ejemplar> clase = Ejemplar.class;
+    private final Class<Ejemplar> clase = (Class<Ejemplar>) new Ejemplar().getClass();
 
     @Override
     public Class<?> getClase() {

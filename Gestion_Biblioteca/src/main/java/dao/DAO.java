@@ -11,34 +11,47 @@ import java.util.List;
 
 public interface DAO {
 
-    public default ObjetoGenerico read(int id){
+    public default <T> T read(int id){
         EntityManager em = getEntityManager();
-        return new ObjetoGenerico(em.find(getClase(), id),getClase());
+        return (T) em.find(getClase(), id);
     };
-    public default ObjetoGenerico read(String id){
+    public default <T> T read(String id){
         EntityManager em = getEntityManager();
-        return new ObjetoGenerico(em.find(getClase(), id),getClase());
+        return (T) em.find(getClase(), id);
     };
 
-    public default ArrayList<ObjetoGenerico> readAll() {
+    public default <T> ArrayList<T> readAll() {
         EntityManager em = getEntityManager();
 
         // Construcción dinámica de la consulta SQL
         String query = "select * from " + getClase().getSimpleName();
 
         // Ejecutar la consulta y convertir los resultados a una lista de ObjetoGenerico
-        ArrayList<ObjetoGenerico> resultado = new ArrayList<>();
-        List<Object> instancias = (List<Object>) em.createNativeQuery(query, getClase()).getResultList();
+        ArrayList<T> resultado = (ArrayList<T>) em.createNativeQuery(query, getClase()).getResultList();
 
-        // Convertir las instancias a ObjetoGenerico y agregarlas a la lista de resultados
-        for (Object o : instancias) {
-            resultado.add(new ObjetoGenerico(o, getClase()));
-        }
+        return resultado;
+    }
+    public default <T> ArrayList<T> readBy(String campo, String valor) {
+        EntityManager em = getEntityManager();
+
+        // Construcción dinámica de la consulta SQL
+        String query = ("select * from " + getClase().getSimpleName() + " where ? = ?");
+
+
+        // Crear la consulta nativa
+        Query sentencia = em.createNativeQuery(query.toString(), getClase());
+
+        // Asignar los valores de los parámetros en la consulta
+            sentencia.setParameter(1,campo);
+            sentencia.setParameter(2,valor);
+
+        // Ejecutar la consulta y convertir los resultados a una lista de ObjetoGenerico
+        ArrayList<T> resultado = (ArrayList<T>) sentencia.getResultList();
 
         return resultado;
     }
 
-    public default ArrayList<ObjetoGenerico> readBy(ArrayList<String> campos, ArrayList<String> valores) {
+    public default <T> ArrayList<T> readBy(ArrayList<String> campos, ArrayList<String> valores) {
         EntityManager em = getEntityManager();
 
         // Construcción dinámica de la consulta SQL
@@ -56,18 +69,12 @@ public interface DAO {
         Query sentencia = em.createNativeQuery(query.toString(), getClase());
 
         // Asignar los valores de los parámetros en la consulta
-        for (int i = 0; i < campos.size(); i++) {
+        for (int i = 0; i < valores.size(); i++) {
             sentencia.setParameter(i + 1, valores.get(i));  // Usar i + 1 para el índice de parámetro
         }
 
         // Ejecutar la consulta y convertir los resultados a una lista de ObjetoGenerico
-        ArrayList<ObjetoGenerico> resultado = new ArrayList<>();
-        List<Object> instancias = sentencia.getResultList();
-
-        // Convertir las instancias a ObjetoGenerico y agregarlas a la lista de resultados
-        for (Object o : instancias) {
-            resultado.add(new ObjetoGenerico(o, getClase()));
-        }
+        ArrayList<T> resultado = (ArrayList<T>) sentencia.getResultList();
 
         return resultado;
     }
@@ -75,6 +82,7 @@ public interface DAO {
     public default boolean insert(ObjetoGenerico objetoGenerico){
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
+        //El cast en el main no funciona
         em.persist(objetoGenerico.getClase().cast(objetoGenerico.getInstancia()));
         em.getTransaction().commit();
         return true;
