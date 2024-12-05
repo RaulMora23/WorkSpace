@@ -34,7 +34,9 @@ public class Prestamo implements Comparable<Prestamo> {
     @Column(name = "fechaDevolucion")
     private LocalDate fechaDevolucion;
 
+    @Transient
     private int ejemplarID;
+    @Transient
     private int usuarioID;
 
     public Prestamo() {};
@@ -124,7 +126,9 @@ public class Prestamo implements Comparable<Prestamo> {
     public boolean setFechaDevolucion() {
         if (fechaDevolucion == null) {
             this.fechaDevolucion = LocalDate.now();
-            return fechaDevolucion.isAfter(fechaDevolucion.plusDays(15));
+            getEjemplar().setEstado("DISPONIBLE");
+            getEjemplar().actualizarRegistro();
+            return fechaDevolucion.isAfter(fechaInicio.plusDays(15));
         }
         return false;
     }
@@ -153,8 +157,6 @@ public class Prestamo implements Comparable<Prestamo> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Prestamo prestamo = (Prestamo) o;
-        System.out.println(Objects.equals(id, prestamo.getId()));
-        System.out.println(Objects.equals(usuario.getId(), prestamo.getUsuario().getId()));
         return (Objects.equals(id, prestamo.getId()) && Objects.equals(usuarioID, prestamo.getUsuarioID()) &&
                 Objects.equals(ejemplarID,prestamo.getEjemplarID()) && fechaInicio.equals(prestamo.getFechaInicio()));
     }

@@ -7,10 +7,7 @@ import dao.UsuarioDao;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "Usuario")
@@ -151,7 +148,6 @@ public class Usuario implements Comparable<Usuario> {
     //Si da true hay penalizacion
     public boolean devolverPrestamo(Prestamo prestamo) {
         boolean sancion = false;
-        System.out.println(this.prestamos.contains(prestamo));
         if(this.prestamos.contains(prestamo)||this.tipo.equals("administrador")) {
             System.out.println("Esta contenido");
            sancion = prestamo.setFechaDevolucion();
@@ -168,6 +164,16 @@ public class Usuario implements Comparable<Usuario> {
            return false;
        }
        return false;
+    }
+
+    public boolean adquirirPrestamo(String isbn) {
+        if (LocalDate.now().isAfter(getPenalizacionHasta())||penalizacionHasta==null){
+            DAO dao = new PrestamoDao();
+            ArrayList<Prestamo> arrayList = (ArrayList<Prestamo>) dao.readBy(List.of("isbn", "estado"),List.of(isbn, "DISPONIBLE")).getFirst();
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override

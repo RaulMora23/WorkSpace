@@ -51,7 +51,7 @@ public interface DAO {
         return resultado;
     }
 
-    public default <T> ArrayList<T> readBy(ArrayList<String> campos, ArrayList<String> valores) {
+    public default <T> ArrayList<T> readBy(List<String> campos, List<String> valores) {
         EntityManager em = getEntityManager();
 
         // Construcción dinámica de la consulta SQL
@@ -73,10 +73,7 @@ public interface DAO {
             sentencia.setParameter(i + 1, valores.get(i));  // Usar i + 1 para el índice de parámetro
         }
 
-        // Ejecutar la consulta y convertir los resultados a una lista de ObjetoGenerico
-        ArrayList<T> resultado = (ArrayList<T>) sentencia.getResultList();
-
-        return resultado;
+        return (ArrayList<T>) sentencia.getResultList();
     }
 
     public default boolean insert(ObjetoGenerico objetoGenerico){
