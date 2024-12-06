@@ -35,15 +35,14 @@ public interface DAO {
         EntityManager em = getEntityManager();
 
         // Construcción dinámica de la consulta SQL
-        String query = ("select * from " + getClase().getSimpleName() + " where ? = ?");
+        String query = ("select * from " + getClase().getSimpleName() + " where "+campo+" = ?");
 
 
         // Crear la consulta nativa
-        Query sentencia = em.createNativeQuery(query.toString(), getClase());
+        Query sentencia = em.createNativeQuery(query, getClase());
 
         // Asignar los valores de los parámetros en la consulta
-            sentencia.setParameter(1,campo);
-            sentencia.setParameter(2,valor);
+            sentencia.setParameter(1,valor);
 
         // Ejecutar la consulta y convertir los resultados a una lista de ObjetoGenerico
         ArrayList<T> resultado = (ArrayList<T>) sentencia.getResultList();

@@ -1,9 +1,6 @@
 package dto;
 
-import dao.DAO;
-import dao.ObjetoGenerico;
-import dao.PrestamoDao;
-import dao.UsuarioDao;
+import dao.*;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -41,7 +38,10 @@ public class Usuario implements Comparable<Usuario> {
 
     private static Set<String> tipos = Set.of("administrador", "normal");
 
-    public Usuario() {};
+    public Usuario() {
+    }
+
+    ;
 
     public Usuario(String dni, String nombre, String email, String password, String tipo) {
         setDni(dni);
@@ -61,7 +61,7 @@ public class Usuario implements Comparable<Usuario> {
         setTipo(tipo);
     }
 
-    public Usuario(Object o){
+    public Usuario(Object o) {
         Usuario usuario = (Usuario) o;
         this.id = usuario.getId();
         this.dni = usuario.getDni();
@@ -69,7 +69,7 @@ public class Usuario implements Comparable<Usuario> {
         this.email = usuario.getEmail();
         this.password = usuario.getPassword();
         this.tipo = usuario.getTipo();
-        this.prestamos=usuario.getPrestamos();
+        this.prestamos = usuario.getPrestamos();
     }
 
     public Integer getId() {
@@ -117,7 +117,7 @@ public class Usuario implements Comparable<Usuario> {
     }
 
     public void setTipo(String tipo) {
-        if(tipos.contains(tipo)) {
+        if (tipos.contains(tipo)) {
             this.tipo = tipo;
         }
     }
@@ -136,42 +136,52 @@ public class Usuario implements Comparable<Usuario> {
 
     public void setPrestamos() {
         DAO dao = new PrestamoDao();
-        ArrayList<Prestamo> arrayList = dao.readBy("usuario_id",String.valueOf(id));
+        ArrayList<Prestamo> arrayList = dao.readBy("usuario_id", String.valueOf(id));
         prestamos.clear();
-        prestamos.addAll(arrayList);
+        for (Prestamo p : arrayList) {
+            prestamos.add(p);
+        }
     }
 
-    public void actualizarRegistro(){
+    public void actualizarRegistro() {
         DAO dao = new UsuarioDao();
         dao.update(new ObjetoGenerico(this, getClass()));
     }
+
     //Si da true hay penalizacion
     public boolean devolverPrestamo(Prestamo prestamo) {
         boolean sancion = false;
-        if(this.prestamos.contains(prestamo)||this.tipo.equals("administrador")) {
+        if (this.prestamos.contains(prestamo) || this.tipo.equals("administrador")) {
             System.out.println("Esta contenido");
-           sancion = prestamo.setFechaDevolucion();
-           prestamo.actualizarRegistro();
-           if (sancion) {
-               if (this.getPenalizacionHasta()==null){
-                   this.setPenalizacionHasta(LocalDate.now().plusDays(15));
-               }else{
-                   this.setPenalizacionHasta(getPenalizacionHasta().plusDays(15));
-               }
-               actualizarRegistro();
-               return true;
-           }
-           return false;
-       }
-       return false;
+            sancion = prestamo.setFechaDevolucion();
+            prestamo.actualizarRegistro();
+            if (sancion) {
+                if (this.getPenalizacionHasta() == null) {
+                    this.setPenalizacionHasta(LocalDate.now().plusDays(15));
+                } else {
+                    this.setPenalizacionHasta(getPenalizacionHasta().plusDays(15));
+                }
+                actualizarRegistro();
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     public boolean adquirirPrestamo(String isbn) {
-        if (LocalDate.now().isAfter(getPenalizacionHasta())||penalizacionHasta==null){
-            DAO dao = new PrestamoDao();
-            ArrayList<Prestamo> arrayList = (ArrayList<Prestamo>) dao.readBy(List.of("isbn", "estado"),List.of(isbn, "DISPONIBLE")).getFirst();
-            return true;
-        }else{
+        if (penalizacionHasta == null || LocalDate.now().isAfter(getPenalizacionHasta())) {
+            DAO dao = new EjemplarDao();
+            Ejemplar e = (Ejemplar) dao.readBy(List.of("isbn", "estado"), List.of(isbn, "DISPONIBLE")).getFirst();
+            if (e != null) {
+                Prestamo p = new Prestamo(getId(), e.getId());
+                dao = new PrestamoDao();
+                dao.insert(new ObjetoGenerico(p, p.getClass()));
+                //setPrestamos();
+                return true;
+            }
+            return false;
+        } else {
             return false;
         }
     }
@@ -192,6 +202,7 @@ public class Usuario implements Comparable<Usuario> {
     public int compareTo(Usuario o) {
         return this.dni.compareTo(o.getDni());
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -199,6 +210,7 @@ public class Usuario implements Comparable<Usuario> {
         Usuario usuario = (Usuario) o;
         return id.equals(usuario.getId()) && dni.equals(usuario.getDni()) && nombre.equals(usuario.getNombre()) && email.equals(usuario.getEmail()) && password.equals(usuario.getPassword()) && tipo.equals(usuario.getTipo()) && penalizacionHasta.equals(usuario.getPenalizacionHasta());
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(id, dni, nombre, email, password, tipo, penalizacionHasta);
