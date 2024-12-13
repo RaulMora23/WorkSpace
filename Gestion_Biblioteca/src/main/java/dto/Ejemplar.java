@@ -52,6 +52,11 @@ public class Ejemplar implements Comparable<Ejemplar> {
         this.prestamos=e.getPrestamos();
     }
 
+    public Ejemplar(ArrayList<String> valores){
+        setIsbn(valores.get(0));
+        setEstado(valores.get(1));
+    }
+
     public Integer getId() {
         return id;
     }

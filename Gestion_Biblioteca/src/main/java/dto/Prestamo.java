@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
 
 @Entity
@@ -64,6 +65,14 @@ public class Prestamo implements Comparable<Prestamo> {
         this.fechaDevolucion = prestamo.getFechaDevolucion();
     }
 
+    public Prestamo(ArrayList<String> valores) {
+        setId(id);
+        setUsuario(Integer.parseInt(valores.get(0)));
+        setUsuarioID();
+        setEjemplar(Integer.parseInt(valores.get(1)));
+        setEjemplarID();
+        setFechaInicio();
+    }
 
     public Integer getId() {
         return id;
@@ -72,12 +81,6 @@ public class Prestamo implements Comparable<Prestamo> {
     public void setId(Integer id) {
         this.id = id;
     }
-
-
-
-
-
-
 
     public dto.Usuario getUsuario() {
         return usuario;

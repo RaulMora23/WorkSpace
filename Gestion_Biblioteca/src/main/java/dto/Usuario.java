@@ -61,6 +61,14 @@ public class Usuario implements Comparable<Usuario> {
         setTipo(tipo);
     }
 
+    public Usuario(ArrayList<String> valores){
+        setDni(valores.get(0));
+        setNombre(valores.get(1));
+        setEmail(valores.get(2));
+        setPassword(valores.get(3));
+        setTipo(valores.get(4));
+    }
+
     public Usuario(Object o) {
         Usuario usuario = (Usuario) o;
         this.id = usuario.getId();

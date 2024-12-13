@@ -6,6 +6,7 @@ import dao.ObjetoGenerico;
 import dao.UsuarioDao;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -38,6 +39,11 @@ public class Libro implements Comparable<Libro> {
         setTitulo(libro.getTitulo());
         setAutor(libro.getAutor());
         this.ejemplares.addAll(libro.getEjemplares());
+    }
+    public Libro(ArrayList<String> valores){
+        setIsbn(valores.get(0));
+        setTitulo(valores.get(1));
+        setAutor(valores.get(2));
     }
 
     public String getIsbn() {

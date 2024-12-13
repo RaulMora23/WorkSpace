@@ -104,6 +104,7 @@ public interface DAO {
 
     public EntityManager getEntityManager();
 
+    public ArrayList<String> getCampos();
 //    public Object castObject(Object objeto);
 
 
