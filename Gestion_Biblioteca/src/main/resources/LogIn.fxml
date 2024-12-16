@@ -45,7 +45,7 @@
                      </font>
                   </Label>
                   <PasswordField fx:id="contraseña" layoutX="182.0" layoutY="81.0" promptText="Contraseña" text="adminpass123" />
-                  <Button layoutX="143.0" layoutY="126.0" mnemonicParsing="false" onAction="#acceder" style="-fx-background-color: BLACK; -fx-background-radius: 40;" text="Acceder" textFill="WHITE">
+                  <Button defaultButton="true" layoutX="143.0" layoutY="126.0" mnemonicParsing="false" onAction="#acceder" style="-fx-background-color: BLACK; -fx-background-radius: 40;" text="Acceder" textFill="WHITE">
                      <font>
                         <Font size="16.0" />
                      </font>

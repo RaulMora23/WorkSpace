@@ -66,7 +66,6 @@ public class Prestamo implements Comparable<Prestamo> {
     }
 
     public Prestamo(ArrayList<String> valores) {
-        setId(id);
         setUsuario(Integer.parseInt(valores.get(0)));
         setUsuarioID();
         setEjemplar(Integer.parseInt(valores.get(1)));

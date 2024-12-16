@@ -13,7 +13,7 @@ public class PrestamoDao implements DAO {
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("biblioteca");
     private final EntityManager em = emf.createEntityManager();
     private final Class<Prestamo> clase = Prestamo.class;
-    private final ArrayList<String> campos = new ArrayList<>(List.of("id","usuario_id","ejemplar_id","fechaInicio","fechaDevolucion"));
+    private final ArrayList<String> campos = new ArrayList<>(List.of("id","usuario_id","ejemplar_id"));
 
     @Override
     public Class<?> getClase() {

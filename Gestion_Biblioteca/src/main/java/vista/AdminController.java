@@ -15,17 +15,74 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class AdminController {
 
     private DAO dao = new UsuarioDao();
-
+    //Esto está pensado para el caso de usuario no administrador
     private Usuario usuario;
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    private ResourceBundle bundle;
+
+    private void cambiarIdioma(Locale locale) {
+        bundle = ResourceBundle.getBundle("idioma", locale);
+        buscar.setText(bundle.getString("search"));
+        crear.setText(bundle.getString("create"));
+        eliminar.setText(bundle.getString("delete"));
+        modificar.setText(bundle.getString("update"));
+        buscar.setTooltip(new Tooltip(bundle.getString("searchTool")));
+        crear.setTooltip(new Tooltip(bundle.getString("createTool")));
+        eliminar.setTooltip(new Tooltip(bundle.getString("deleteTool")));
+        modificar.setTooltip(new Tooltip(bundle.getString("updateTool")));
+    }
+
+    public void initialize() {
+        // Idioma inicial (Español por defecto)
+        bundle = ResourceBundle.getBundle("idioma", new Locale("es"));
+
+        // Configuración del ComboBox con opciones de idioma
+        idioma.getItems().addAll("Español", "English");
+        idioma.setValue("Español"); // Idioma inicial
+
+        // Cambiar idioma cuando se selecciona una opción
+        idioma.setOnAction(event -> {
+            String idiomaSeleccionado = idioma.getValue();
+            switch (idiomaSeleccionado) {
+                case "English":
+                    cambiarIdioma(new Locale("en"));
+                    break;
+                default:
+                    cambiarIdioma(new Locale("es"));
+                    break;
+            }
+        });
+        buscar.setTooltip(new Tooltip(bundle.getString("searchTool")));
+        crear.setTooltip(new Tooltip(bundle.getString("createTool")));
+        eliminar.setTooltip(new Tooltip(bundle.getString("deleteTool")));
+        modificar.setTooltip(new Tooltip(bundle.getString("updateTool")));
+    }
+
+    @FXML
+    private Button buscar;
+
+    @FXML
+    private Button crear;
+
+    @FXML
+    private Button eliminar;
+
+    @FXML
+    private Button modificar;
+
+    @FXML
+    private ComboBox<String> idioma;
 
     @FXML
     void desplegarEjemplar(ActionEvent event) {
@@ -53,6 +110,7 @@ public class AdminController {
     @FXML
     void buscar(ActionEvent event) {
         Stage stage = new Stage();
+        stage.setTitle(bundle.getString("searchTool"));
         HBox hbox = new HBox();
         // Configurar alineación y espaciado
         hbox.setAlignment(Pos.CENTER); // Centra los elementos
@@ -66,6 +124,7 @@ public class AdminController {
         ArrayList<String> campos = new ArrayList<>();
         ArrayList<String> valores = new ArrayList<>();
         Button but = new Button("Buscar");
+        but.setDefaultButton(true);
         but.setOnAction(event1 -> {
             for (Node tf : hbox.getChildren()) {
                 if (tf instanceof TextField) {
@@ -98,6 +157,7 @@ public class AdminController {
     @FXML
     void crear(ActionEvent event) {
         Stage stage = new Stage();
+        stage.setTitle(bundle.getString("createTool"));
         HBox hbox = new HBox();
         // Configurar alineación y espaciado
         hbox.setAlignment(Pos.CENTER); // Centra los elementos
@@ -110,6 +170,7 @@ public class AdminController {
         }
         ArrayList<String> valores = new ArrayList<>();
         Button but = new Button("Crear");
+        but.setDefaultButton(true);
         but.setOnAction(event1 -> {
             try {
                 for (Node tf : hbox.getChildren()) {
@@ -164,6 +225,7 @@ public class AdminController {
     @FXML
     void eliminar(ActionEvent event) {
         Stage stage = new Stage();
+        stage.setTitle(bundle.getString("deleteTool"));
         HBox hbox = new HBox();
         // Configurar alineación y espaciado
         hbox.setAlignment(Pos.CENTER); // Centra los elementos
@@ -177,6 +239,7 @@ public class AdminController {
         ArrayList<String> campos = new ArrayList<>();
         ArrayList<String> valores = new ArrayList<>();
         Button but = new Button("Eliminar");
+        but.setDefaultButton(true);
         but.setOnAction(event1 -> {
             for (Node tf : hbox.getChildren()) {
                 if (tf instanceof TextField) {
@@ -220,6 +283,7 @@ public class AdminController {
     @FXML
     void modificar(ActionEvent event) {
         Stage stage = new Stage();
+        stage.setTitle(bundle.getString("editTool"));
         HBox hbox = new HBox();
         // Configurar alineación y espaciado
         hbox.setAlignment(Pos.CENTER); // Centra los elementos
@@ -229,12 +293,14 @@ public class AdminController {
         tf.setPromptText(dao.getCampos().get(0));
         hbox.getChildren().add(tf);
         Button but = new Button("Buscar");
+        but.setDefaultButton(true);
         but.setOnAction(event1 -> {
             try {
                 if (dao.getClase().equals(Libro.class)) {
                     Libro libro = dao.read(tf.getText());
                     stage.close();
                     Stage stage2 = new Stage();
+                    stage2.setTitle(bundle.getString("editTool"));
                     HBox hbox2 = new HBox();
                     // Configurar alineación y espaciado
                     hbox2.setAlignment(Pos.CENTER); // Centra los elementos
@@ -248,6 +314,7 @@ public class AdminController {
                         hbox2.getChildren().add(tf2);
                     }
                     Button but2 = new Button("Modificar");
+                    but2.setDefaultButton(true);
                     but2.setOnAction(event2 -> {
                         for (Node nodo : hbox2.getChildren()) {
                             if (nodo instanceof TextField) {
@@ -271,6 +338,7 @@ public class AdminController {
                     Prestamo prestamo = dao.read(Integer.parseInt(tf.getText()));
                     stage.close();
                     Stage stage3 = new Stage();
+                    stage3.setTitle(bundle.getString("editTool"));
                     HBox hbox3 = new HBox();
                     // Configurar alineación y espaciado
                     hbox3.setAlignment(Pos.CENTER); // Centra los elementos
@@ -284,6 +352,7 @@ public class AdminController {
                         hbox3.getChildren().add(tf3);
                     }
                     Button but3 = new Button("Modificar");
+                    but3.setDefaultButton(true);
                     but3.setOnAction(event3 -> {
                         for (Node nodo : hbox3.getChildren()) {
                             if (nodo instanceof TextField) {
@@ -309,6 +378,7 @@ public class AdminController {
                     Usuario usuario = dao.read(Integer.parseInt(tf.getText()));
                     stage.close();
                     Stage stage4 = new Stage();
+                    stage4.setTitle(bundle.getString("editTool"));
                     HBox hbox4 = new HBox();
                     // Configurar alineación y espaciado
                     hbox4.setAlignment(Pos.CENTER); // Centra los elementos
@@ -322,6 +392,7 @@ public class AdminController {
                         hbox4.getChildren().add(tf3);
                     }
                     Button but4 = new Button("Modificar");
+                    but4.setDefaultButton(true);
                     but4.setOnAction(event3 -> {
                         valores.clear();
                         for (Node nodo : hbox4.getChildren()) {
@@ -347,6 +418,7 @@ public class AdminController {
                     Ejemplar ejemplar = dao.read(Integer.parseInt(tf.getText()));
                     stage.close();
                     Stage stage5 = new Stage();
+                    stage5.setTitle(bundle.getString("editTool"));
                     HBox hbox5 = new HBox();
                     // Configurar alineación y espaciado
                     hbox5.setAlignment(Pos.CENTER); // Centra los elementos
@@ -360,6 +432,7 @@ public class AdminController {
                         hbox5.getChildren().add(tf5);
                     }
                     Button but5 = new Button("Modificar");
+                    but5.setDefaultButton(true);
                     but5.setOnAction(event3 -> {
                         for (Node nodo : hbox5.getChildren()) {
                             if (nodo instanceof TextField) {

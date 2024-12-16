@@ -61,6 +61,7 @@ public class LogInController {
                 Parent root = loader.load();
                 adminController = loader.getController();
                 adminController.setUsuario(u);
+                adminController.initialize();
                 // Configurar la escena con el layout cargado desde el archivo FXML
                 Scene scene = new Scene(root);
 
