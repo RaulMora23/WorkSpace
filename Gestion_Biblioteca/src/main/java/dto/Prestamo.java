@@ -167,4 +167,11 @@ public class Prestamo implements Comparable<Prestamo> {
     public int hashCode() {
         return Objects.hash(id, usuarioID, ejemplarID, fechaInicio);
     }
+    public ArrayList<String> getValores() {
+        ArrayList<String> valores = new ArrayList<>();
+        valores.add(String.valueOf(usuarioID));
+        valores.add(String.valueOf(ejemplarID));
+        valores.add(String.valueOf(fechaInicio));
+        return valores;
+    }
 }
