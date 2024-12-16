@@ -5,26 +5,58 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="794.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.AdminController">
+<AnchorPane prefHeight="400.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.AdminController">
    <children>
-      <ButtonBar layoutX="276.0" layoutY="25.0" prefHeight="40.0" prefWidth="200.0">
+      <ButtonBar layoutX="254.0" layoutY="23.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
-          <Button mnemonicParsing="false" onAction="#buscar" text="Buscar" />
-            <Button mnemonicParsing="false" onAction="#crear" text="Crear" />
-            <Button mnemonicParsing="false" onAction="#modificar" text="Modificar" />
-            <Button mnemonicParsing="false" onAction="#eliminar" text="Eliminar" />
+          <Button mnemonicParsing="false" onAction="#buscar" text="Buscar">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#crear" text="Crear">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#modificar" text="Modificar">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
+            <Button mnemonicParsing="false" onAction="#eliminar" text="Eliminar">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Button>
         </buttons>
       </ButtonBar>
-      <TextArea fx:id="resultados" editable="false" layoutX="-2.0" layoutY="91.0" prefHeight="308.0" prefWidth="794.0" />
+      <TextArea fx:id="resultados" editable="false" layoutX="-2.0" layoutY="92.0" prefHeight="308.0" prefWidth="819.0" />
       <RadioButton layoutX="158.0" layoutY="24.0" mnemonicParsing="false" onAction="#desplegarLibro" text="Libro">
          <toggleGroup>
             <ToggleGroup fx:id="grupo" />
          </toggleGroup>
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
       </RadioButton>
-      <RadioButton layoutX="53.0" layoutY="54.0" mnemonicParsing="false" onAction="#desplegarPrestamo" text="Prestamo" toggleGroup="$grupo" />
-      <RadioButton layoutX="57.0" layoutY="26.0" mnemonicParsing="false" onAction="#desplegarUsuario" text="Usuario" toggleGroup="$grupo" />
-      <RadioButton layoutX="158.0" layoutY="54.0" mnemonicParsing="false" onAction="#desplegarEjemplar" text="Ejemplar" toggleGroup="$grupo" />
+      <RadioButton layoutX="53.0" layoutY="54.0" mnemonicParsing="false" onAction="#desplegarPrestamo" text="Prestamo" toggleGroup="$grupo">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></RadioButton>
+      <RadioButton layoutX="57.0" layoutY="26.0" mnemonicParsing="false" onAction="#desplegarUsuario" text="Usuario" toggleGroup="$grupo">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></RadioButton>
+      <RadioButton layoutX="158.0" layoutY="54.0" mnemonicParsing="false" onAction="#desplegarEjemplar" text="Ejemplar" toggleGroup="$grupo">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font></RadioButton>
+      <ImageView fitHeight="80.0" fitWidth="101.0" layoutX="675.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@libros.jpg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

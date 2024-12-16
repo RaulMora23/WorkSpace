@@ -107,4 +107,11 @@ public class Libro implements Comparable<Libro> {
     public int compareTo(Libro o) {
         return isbn.compareTo(o.getIsbn());
     }
+    public ArrayList<String> getValores() {
+        ArrayList<String> valores = new ArrayList<>();
+        valores.add(getIsbn());
+        valores.add(getTitulo());
+        valores.add(getAutor());
+        return valores;
+    }
 }

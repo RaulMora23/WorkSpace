@@ -100,12 +100,19 @@ public class Ejemplar implements Comparable<Ejemplar> {
     public String toString() {
         return "Ejemplar:" +
                 "id=" + id +
-                ", isbn=" + isbn.getTitulo() +
-                ", estado='" + estado;
+                ", titulo=" + "'" + isbn.getTitulo()+"'"+
+                ", estado=" + estado;
     }
 
     @Override
     public int compareTo(Ejemplar o) {
         return id.compareTo(o.getId());
+    }
+
+    public ArrayList<String> getValores() {
+        ArrayList<String> valores = new ArrayList<>();
+        valores.add(isbn.getTitulo());
+        valores.add(estado);
+        return valores;
     }
 }

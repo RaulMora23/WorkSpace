@@ -224,4 +224,14 @@ public class Usuario implements Comparable<Usuario> {
         return Objects.hash(id, dni, nombre, email, password, tipo, penalizacionHasta);
     }
 
+    public ArrayList<String> getValores() {
+        ArrayList<String> valores = new ArrayList<>();
+        valores.add(dni);
+        valores.add(nombre);
+        valores.add(email);
+        valores.add(password);
+        valores.add(tipo);
+        valores.add(""+penalizacionHasta);
+        return valores;
+    }
 }
