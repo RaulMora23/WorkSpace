@@ -27,9 +27,6 @@ public class LogInController {
     public static void closeWindow() {
         stage.close();
     }
-    public static void openWindow() {
-        stage.show();
-    }
 
     public void setStage(Stage stage) {
         LogInController.stage = stage;

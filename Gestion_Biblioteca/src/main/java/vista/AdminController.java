@@ -134,8 +134,6 @@ public class AdminController {
                     }
                 }
             }
-            System.out.println(campos);
-            System.out.println(valores);
             ArrayList<?> array = dao.readBy(campos, valores);
             campos.clear();
             valores.clear();
@@ -283,7 +281,7 @@ public class AdminController {
     @FXML
     void modificar(ActionEvent event) {
         Stage stage = new Stage();
-        stage.setTitle(bundle.getString("editTool"));
+        stage.setTitle(bundle.getString("updateTool"));
         HBox hbox = new HBox();
         // Configurar alineación y espaciado
         hbox.setAlignment(Pos.CENTER); // Centra los elementos
@@ -300,7 +298,7 @@ public class AdminController {
                     Libro libro = dao.read(tf.getText());
                     stage.close();
                     Stage stage2 = new Stage();
-                    stage2.setTitle(bundle.getString("editTool"));
+                    stage2.setTitle(bundle.getString("updateTool"));
                     HBox hbox2 = new HBox();
                     // Configurar alineación y espaciado
                     hbox2.setAlignment(Pos.CENTER); // Centra los elementos
@@ -338,7 +336,7 @@ public class AdminController {
                     Prestamo prestamo = dao.read(Integer.parseInt(tf.getText()));
                     stage.close();
                     Stage stage3 = new Stage();
-                    stage3.setTitle(bundle.getString("editTool"));
+                    stage3.setTitle(bundle.getString("updateTool"));
                     HBox hbox3 = new HBox();
                     // Configurar alineación y espaciado
                     hbox3.setAlignment(Pos.CENTER); // Centra los elementos
@@ -378,7 +376,7 @@ public class AdminController {
                     Usuario usuario = dao.read(Integer.parseInt(tf.getText()));
                     stage.close();
                     Stage stage4 = new Stage();
-                    stage4.setTitle(bundle.getString("editTool"));
+                    stage4.setTitle(bundle.getString("updateTool"));
                     HBox hbox4 = new HBox();
                     // Configurar alineación y espaciado
                     hbox4.setAlignment(Pos.CENTER); // Centra los elementos
@@ -418,7 +416,7 @@ public class AdminController {
                     Ejemplar ejemplar = dao.read(Integer.parseInt(tf.getText()));
                     stage.close();
                     Stage stage5 = new Stage();
-                    stage5.setTitle(bundle.getString("editTool"));
+                    stage5.setTitle(bundle.getString("updateTool"));
                     HBox hbox5 = new HBox();
                     // Configurar alineación y espaciado
                     hbox5.setAlignment(Pos.CENTER); // Centra los elementos

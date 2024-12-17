@@ -13,7 +13,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="791.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vista.AdminController">
    <children>
-      <ButtonBar layoutX="315.0" layoutY="29.0" prefHeight="40.0" prefWidth="200.0">
+      <ButtonBar layoutX="277.0" layoutY="29.0" prefHeight="40.0" prefWidth="200.0">
         <buttons>
           <Button fx:id="buscar" mnemonicParsing="false" onAction="#buscar" text="Buscar">
                <font>
@@ -34,7 +34,7 @@
         </buttons>
       </ButtonBar>
       <TextArea fx:id="resultados" editable="false" layoutX="-2.0" layoutY="92.0" prefHeight="308.0" prefWidth="819.0" />
-      <RadioButton layoutX="219.0" layoutY="25.0" mnemonicParsing="false" onAction="#desplegarLibro" text="Libro">
+      <RadioButton layoutX="205.0" layoutY="25.0" mnemonicParsing="false" onAction="#desplegarLibro" text="Libro">
          <toggleGroup>
             <ToggleGroup fx:id="grupo" />
          </toggleGroup>
@@ -42,15 +42,15 @@
             <Font name="System Bold Italic" size="12.0" />
          </font>
       </RadioButton>
-      <RadioButton layoutX="117.0" layoutY="55.0" mnemonicParsing="false" onAction="#desplegarPrestamo" text="Prestamo" toggleGroup="$grupo">
+      <RadioButton layoutX="104.0" layoutY="55.0" mnemonicParsing="false" onAction="#desplegarPrestamo" text="Prestamo" toggleGroup="$grupo">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></RadioButton>
-      <RadioButton layoutX="117.0" layoutY="25.0" mnemonicParsing="false" onAction="#desplegarUsuario" text="Usuario" toggleGroup="$grupo">
+      <RadioButton layoutX="104.0" layoutY="25.0" mnemonicParsing="false" onAction="#desplegarUsuario" text="Usuario" toggleGroup="$grupo">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></RadioButton>
-      <RadioButton layoutX="219.0" layoutY="55.0" mnemonicParsing="false" onAction="#desplegarEjemplar" text="Ejemplar" toggleGroup="$grupo">
+      <RadioButton layoutX="205.0" layoutY="55.0" mnemonicParsing="false" onAction="#desplegarEjemplar" text="Ejemplar" toggleGroup="$grupo">
          <font>
             <Font name="System Bold Italic" size="12.0" />
          </font></RadioButton>
@@ -59,6 +59,6 @@
             <Image url="@libros.jpg" />
          </image>
       </ImageView>
-      <ComboBox fx:id="idioma" layoutX="713.0" layoutY="23.0" prefHeight="25.0" prefWidth="90.0" promptText="Idioma" visibleRowCount="2" />
+      <ComboBox fx:id="idioma" layoutX="695.0" layoutY="16.0" prefHeight="26.0" prefWidth="108.0" promptText="Idioma" visibleRowCount="2" />
    </children>
 </AnchorPane>
