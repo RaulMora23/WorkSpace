@@ -160,7 +160,6 @@ public class Usuario implements Comparable<Usuario> {
     public boolean devolverPrestamo(Prestamo prestamo) {
         boolean sancion = false;
         if (this.prestamos.contains(prestamo) || this.tipo.equals("administrador")) {
-            System.out.println("Esta contenido");
             sancion = prestamo.setFechaDevolucion();
             prestamo.actualizarRegistro();
             if (sancion) {
@@ -185,7 +184,9 @@ public class Usuario implements Comparable<Usuario> {
                 Prestamo p = new Prestamo(getId(), e.getId());
                 dao = new PrestamoDao();
                 dao.insert(new ObjetoGenerico(p, p.getClass()));
-                //setPrestamos();
+                e.setEstado("PRESTADO");
+                e.actualizarRegistro();
+                setPrestamos();
                 return true;
             }
             return false;
