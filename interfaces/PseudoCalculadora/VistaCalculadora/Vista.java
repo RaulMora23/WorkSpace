@@ -55,7 +55,6 @@ public class Vista extends JFrame {
 		resultado.setLineWrap(true);
 		centro.add(resultado);
 		add(border);
-		
 		//CONFIGURACION ESTÉTICA
 		este.setLayout(new BoxLayout(este, BoxLayout.Y_AXIS));
 		oeste.setLayout(new BoxLayout(oeste, BoxLayout.Y_AXIS));
