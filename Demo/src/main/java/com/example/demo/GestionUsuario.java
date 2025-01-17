@@ -10,7 +10,6 @@ public class GestionUsuario {
     @GetMapping("/getUsuario")
     public ResponseEntity<Usuario> getUsuario(){
         if (usuario == null) {
-            System.out.println("Usuario no encontrado");
             return ResponseEntity.notFound().build();
         }
         else{
@@ -42,7 +41,6 @@ public class GestionUsuario {
             usuario = new Usuario(nickname, password);
             return true;
         }else {
-            System.out.println("Usuario no encontrado");
             return false;
         }
     }
