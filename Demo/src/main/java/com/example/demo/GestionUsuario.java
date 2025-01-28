@@ -2,7 +2,6 @@ package com.example.demo;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
 
 @RestController
 public class GestionUsuario {

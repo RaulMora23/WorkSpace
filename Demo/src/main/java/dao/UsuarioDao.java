@@ -1,19 +1,19 @@
 package dao;
 
-import dto.Ejemplar;
+import dto.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
-import java.io.DataOutput;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EjemplarDao implements DAO {
+public class UsuarioDao implements DAO {
     private final EntityManagerFactory emf = Persistence.createEntityManagerFactory("biblioteca");
     private final EntityManager em = emf.createEntityManager();
-    private final Class<Ejemplar> clase = Ejemplar.class;
-    private final ArrayList<String> campos = new ArrayList<>(List.of("id","isbn","estado"));
+    private final Class<Usuario> clase = Usuario.class;
+    private final ArrayList<String> campos = new ArrayList<>(List.of("id","dni","nombre","email","password","tipo","penalizacionHasta"));
+
     @Override
     public Class<?> getClase() {
         return clase;
@@ -28,6 +28,4 @@ public class EjemplarDao implements DAO {
     public ArrayList<String> getCampos() {
         return campos;
     }
-
-
 }
