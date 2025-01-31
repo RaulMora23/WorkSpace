@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="operando_2">Operando 2</string>
+    <string name="introduce_operando">Introduce operando</string>
+</resources>
