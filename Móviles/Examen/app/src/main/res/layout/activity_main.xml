@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="60dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintBottom_toTopOf="@+id/resultadoBici"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="109dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="68dp"
+        android:text="Examen_1º"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/rbBici"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioButton
+        android:id="@+id/rbBici"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="527dp"
+        android:background="@color/design_default_color_secondary"
+        android:text="Bicicleta"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nBici"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <RadioButton
+        android:id="@+id/rbPatinete"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginEnd="12dp"
+        android:background="@color/design_default_color_secondary"
+        android:text="Patinete"
+        android:textSize="24sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/nPatinete"
+        app:layout_constraintEnd_toStartOf="@+id/nPatinete"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <RadioButton
+        android:id="@+id/rbMonopatin"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="43dp"
+        android:layout_marginEnd="12dp"
+        android:background="@color/design_default_color_secondary"
+        android:text="Monopatín"
+        android:textSize="22sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/nMonopatin"
+        app:layout_constraintEnd_toStartOf="@+id/nMonopatin"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/nBici"
+        android:layout_width="123dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/design_default_color_secondary"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="text"
+        android:text="1"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/resultadoPatinete"
+        app:layout_constraintEnd_toStartOf="@+id/resultadoBici"
+        app:layout_constraintStart_toEndOf="@+id/rbBici"
+        app:layout_constraintTop_toBottomOf="@+id/resultadoBici" />
+
+    <EditText
+        android:id="@+id/nPatinete"
+        android:layout_width="110dp"
+        android:layout_height="67dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="@color/design_default_color_secondary"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="text"
+        android:text="1"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/resultadoMonopatín"
+        app:layout_constraintEnd_toStartOf="@+id/resultadoPatinete"
+        app:layout_constraintStart_toEndOf="@+id/rbPatinete"
+        app:layout_constraintTop_toBottomOf="@+id/resultadoPatinete" />
+
+    <EditText
+        android:id="@+id/nMonopatin"
+        android:layout_width="120dp"
+        android:layout_height="77dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="179dp"
+        android:background="@color/design_default_color_secondary"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="text"
+        android:text="1"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/clacular"
+        app:layout_constraintEnd_toStartOf="@+id/resultadoMonopatín"
+        app:layout_constraintStart_toEndOf="@+id/rbMonopatin"
+        app:layout_constraintTop_toBottomOf="@+id/resultadoMonopatín" />
+
+    <TextView
+        android:id="@+id/resultadoBici"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/design_default_color_secondary"
+        android:gravity="center"
+        android:text="2"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/nBici"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nBici"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <TextView
+        android:id="@+id/resultadoPatinete"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="18dp"
+        android:background="@color/design_default_color_secondary"
+        android:gravity="center"
+        android:text="3"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/nPatinete"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nPatinete"
+        app:layout_constraintTop_toBottomOf="@+id/nBici" />
+
+    <TextView
+        android:id="@+id/resultadoMonopatín"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/design_default_color_secondary"
+        android:gravity="center"
+        android:text="5"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/nMonopatin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nMonopatin"
+        app:layout_constraintTop_toBottomOf="@+id/nPatinete" />
+
+    <Button
+        android:id="@+id/clacular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="81dp"
+        android:onClick="calcular"
+        android:text="Calcular"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nMonopatin" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

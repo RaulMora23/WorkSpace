@@ -2,6 +2,7 @@ package com.example.calculadoratemperaturabisiexto;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,11 +18,11 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
     }
-    public void temperaturas(){
+    public void temperaturas(View view){
         Intent intentTemperatura = new Intent(MainActivity.this, Temperaturas.class);
         startActivity(intentTemperatura);
     }
-    public void bisiextos(){
+    public void bisiextos(View view){
         Intent intentBisiextos = new Intent(MainActivity.this, Bisiextos.class);
         startActivity(intentBisiextos);
     }
