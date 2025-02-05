@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         libros.add(new Libro("978-0-7432-7356-5", "1984", "George Orwell", true, "Distopía futurista sobre el totalitarismo."));
 
         RecyclerView rv = findViewById(R.id.recyclerView);
-
+        rv.setLayoutManager(new LinearLayoutManager(this));
+        LibroAdapter adapter = new LibroAdapter(libros);
+        rv.setAdapter(adapter);
     }
 }

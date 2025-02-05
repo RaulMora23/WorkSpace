@@ -39,8 +39,12 @@ public class Libro {
         this.autor = autor;
     }
 
-    public boolean isFavorito() {
-        return favorito;
+    public String isFavorito() {
+        if (favorito){
+            return "★";
+        }else {
+            return "";
+        }
     }
 
     public void setFavorito(boolean favorito) {
