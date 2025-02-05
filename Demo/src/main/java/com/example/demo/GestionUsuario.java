@@ -1,11 +1,11 @@
 package com.example.demo;
 
+import dto.Usuario;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class GestionUsuario {
-    private Usuario usuario;
     @GetMapping("/getUsuario")
     public ResponseEntity<Usuario> getUsuario(){
         if (usuario == null) {
