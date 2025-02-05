@@ -15,6 +15,10 @@ public class Libro {
         this.descripcion = descripcion;
     }
 
+    public Libro() {
+
+    }
+
     public String getISBN() {
         return ISBN;
     }

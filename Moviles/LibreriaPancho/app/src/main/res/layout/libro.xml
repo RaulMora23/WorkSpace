@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="1dp">
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -13,54 +13,68 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="34dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/white"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/tvDescripcion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/tvDescripcion"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <EditText
             android:id="@+id/tvISBN"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:backgroundTint="#00FFFFFF"
             android:gravity="center"
             android:padding="4dp"
             android:text="ISBN"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:enabled="false"
+            android:textColor="@color/black"/>
 
-        <TextView
+        <EditText
             android:id="@+id/tvTitulo"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="#00FFFFFF"
             android:gravity="center"
             android:padding="4dp"
             android:text="Título"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:enabled="false"
+            android:textColor="@color/black"/>
 
-        <TextView
+        <EditText
             android:id="@+id/tvAutor"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="#00FFFFFF"
             android:gravity="center"
             android:padding="4dp"
             android:text="Autor"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:enabled="false"
+            android:textColor="@color/black"/>
 
-        <TextView
+        <EditText
             android:id="@+id/tvFavorito"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="#00FFFFFF"
+            android:backgroundTint="#00FFFFFF"
+            android:enabled="false"
             android:gravity="center"
             android:padding="4dp"
             android:text="★"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
-    <TextView
+    <EditText
         android:id="@+id/tvDescripcion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -74,11 +88,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:enabled="false"
+        android:background="#00FFFFFF"
+        android:textColor="@color/black"/>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
@@ -90,17 +107,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDescripcion">
 
+
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btEliminar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Eliminar" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btModificar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Modificar" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
