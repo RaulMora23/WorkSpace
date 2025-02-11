@@ -12,7 +12,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -52,7 +51,7 @@ public class LogInController {
         else{
             Usuario u = lista.getFirst();
             if(u.getTipo().equals("administrador")){
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Admin.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/Admin.fxml"));
 
                 // Cargar la interfaz gráfica desde el archivo FXML
                 Parent root = loader.load();
@@ -71,7 +70,7 @@ public class LogInController {
                 closeWindow();
                 stage.show();
             }else {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Usuario.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/Usuario.fxml"));
 
                 // Cargar la interfaz gráfica desde el archivo FXML
                 Parent root = loader.load();

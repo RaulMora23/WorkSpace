@@ -13,11 +13,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.ResourceBundle;
+
+import java.time.LocalDate;
+import java.util.*;
 
 public class AdminController {
 
@@ -84,24 +88,30 @@ public class AdminController {
     @FXML
     private ComboBox<String> idioma;
 
+    String rutaJasper;
+
     @FXML
     void desplegarEjemplar(ActionEvent event) {
         dao = new EjemplarDao();
+        rutaJasper ="src/main/resources/JasperReport/ejemplares.jasper";
     }
 
     @FXML
     void desplegarLibro(ActionEvent event) {
         dao = new LibroDao();
+        rutaJasper ="src/main/resources/JasperReport/libros.jasper";
     }
 
     @FXML
     void desplegarPrestamo(ActionEvent event) {
         dao = new PrestamoDao();
+        rutaJasper ="src/main/resources/JasperReport/prestamos.jasper";
     }
 
     @FXML
     void desplegarUsuario(ActionEvent event) {
         dao = new UsuarioDao();
+        rutaJasper ="src/main/resources/JasperReport/usuarios.jasper";
     }
 
     @FXML
@@ -134,7 +144,12 @@ public class AdminController {
                     }
                 }
             }
-            ArrayList<?> array = dao.readBy(campos, valores);
+            ArrayList<?> array;
+            if (campos.size() > 0) {
+                array = dao.readBy(campos, valores);
+            }else{
+                array = dao.readAll();
+            }
             campos.clear();
             valores.clear();
             resultados.clear();
@@ -152,6 +167,92 @@ public class AdminController {
         stage.show();
     }
 
+    @FXML
+    void reporte(ActionEvent event) {
+        Stage stage = new Stage();
+        stage.setTitle(bundle.getString("searchTool"));
+        HBox hbox = new HBox();
+        // Configurar alineación y espaciado
+        hbox.setAlignment(Pos.CENTER); // Centra los elementos
+        hbox.setSpacing(20);
+        stage.setScene(new Scene(hbox));
+        for (String campo : dao.getCampos()) {
+            TextField tf = new TextField();
+            tf.setPromptText(campo);
+            hbox.getChildren().add(tf);
+        }
+        ArrayList<String> campos = new ArrayList<>();
+        ArrayList<String> valores = new ArrayList<>();
+        Button but = new Button("Buscar");
+        but.setDefaultButton(true);
+        but.setOnAction(event1 -> {
+            for (Node tf : hbox.getChildren()) {
+                if (tf instanceof TextField) {
+                    if (!Objects.equals(((TextField) tf).getText(), "")) {
+                        campos.add(((TextField) tf).getPromptText());
+                        valores.add(((TextField) tf).getText());
+                    }
+                }
+            }
+            ArrayList<?> array;
+            if (campos.size() > 0) {
+                array = dao.readBy(campos, valores);
+                ArrayList<?> arraySimple = new ArrayList<>();
+                for (int i = 0; i < array.size(); i++) {
+                    arraySimple.add(dao.getSimpleData(array.get(i)));
+                }
+                // Convertir lista en un JRBeanCollectionDataSource
+                JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(arraySimple);
+
+                // Parámetros del reporte
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("Fecha", "Fecha: " + LocalDate.now());
+
+                // Cargar el archivo .jasper
+                JasperPrint jasperPrint = null;
+                try {
+                    jasperPrint = JasperFillManager.fillReport(rutaJasper, parametros, dataSource);
+                } catch (JRException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // Mostrar el reporte
+                JasperViewer.viewReport(jasperPrint, false);
+            }else{
+                array = dao.readAll();
+                ArrayList<?> arraySimple = new ArrayList<>();
+                for (int i = 0; i < array.size(); i++) {
+                    arraySimple.add(dao.getSimpleData(array.get(i)));
+                }
+                // Convertir lista en un JRBeanCollectionDataSource
+                JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(arraySimple);
+
+                // Parámetros del reporte
+                Map<String, Object> parametros = new HashMap<>();
+                parametros.put("Fecha", "Fecha: " + LocalDate.now());
+
+                // Cargar el archivo .jasper
+                JasperPrint jasperPrint = null;
+                try {
+                    jasperPrint = JasperFillManager.fillReport(rutaJasper, parametros, dataSource);
+                } catch (JRException e) {
+                    throw new RuntimeException(e);
+                }
+
+                // Mostrar el reporte
+                JasperViewer.viewReport(jasperPrint, false);
+            }
+            campos.clear();
+            valores.clear();
+            stage.close();
+        });
+
+        // Añadir el botón al HBox
+        hbox.getChildren().add(but);
+
+        // Mostrar la nueva ventana
+        stage.show();
+    }
     @FXML
     void crear(ActionEvent event) {
         Stage stage = new Stage();

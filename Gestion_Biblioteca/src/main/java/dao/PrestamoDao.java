@@ -2,6 +2,7 @@ package dao;
 
 import dto.Ejemplar;
 import dto.Prestamo;
+import dto.PrestamoData;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -28,6 +29,11 @@ public class PrestamoDao implements DAO {
     @Override
     public ArrayList<String> getCampos() {
         return campos;
+    }
+
+    @Override
+    public <T> T getSimpleData(Object o) {
+        return (T) new PrestamoData((Prestamo) o);
     }
 }
 

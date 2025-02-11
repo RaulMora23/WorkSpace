@@ -29,4 +29,9 @@ public class UsuarioDao implements DAO {
     public ArrayList<String> getCampos() {
         return campos;
     }
+
+    @Override
+    public <T> T getSimpleData(Object o) {
+        return (T) o;
+    }
 }

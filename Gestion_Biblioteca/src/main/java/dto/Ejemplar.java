@@ -21,6 +21,7 @@ public class Ejemplar implements Comparable<Ejemplar> {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "isbn", nullable = false)
+    //Por esto no funcionan los reportes el isbn es un Libro y no un String
     private dto.Libro isbn;
 
     @ColumnDefault("'Disponible'")

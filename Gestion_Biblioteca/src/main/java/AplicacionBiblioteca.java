@@ -2,7 +2,6 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import vista.LogInController;
 
@@ -10,7 +9,7 @@ public class AplicacionBiblioteca extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         // Cargar el archivo FXML desde el classpath
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/LogIn.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/LogIn.fxml"));
 
         // Cargar la interfaz gráfica desde el archivo FXML
         Parent LogIn = loader.load();

@@ -1,6 +1,7 @@
 package dao;
 
 import dto.Ejemplar;
+import dto.EjemplarData;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -27,6 +28,11 @@ public class EjemplarDao implements DAO {
     @Override
     public ArrayList<String> getCampos() {
         return campos;
+    }
+
+    @Override
+    public <T> T getSimpleData(Object o) {
+        return (T) new EjemplarData((Ejemplar) o);
     }
 
 

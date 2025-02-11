@@ -29,4 +29,9 @@ public class LibroDao implements DAO {
         return campos;
     }
 
+    @Override
+    public <T> T getSimpleData(Object o) {
+        return (T) o;
+    }
+
 }
