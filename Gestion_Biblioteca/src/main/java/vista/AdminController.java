@@ -14,12 +14,17 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 
+import javax.swing.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -240,7 +245,36 @@ public class AdminController {
                 }
 
                 // Mostrar el reporte
-                JasperViewer.viewReport(jasperPrint, false);
+                //JasperViewer.viewReport(jasperPrint, false);
+                // Abrir el FileChooser
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setDialogTitle("Guardar PDF");
+                fileChooser.setSelectedFile(new File("reporte.pdf"));
+
+                int userSelection = fileChooser.showSaveDialog(null);
+
+                if (userSelection == JFileChooser.APPROVE_OPTION) {
+                    File fileToSave = fileChooser.getSelectedFile();
+                    if (!fileToSave.getName().toLowerCase().endsWith(".pdf")) {
+                        fileToSave = new File(fileToSave.getAbsolutePath() + ".pdf");
+                    }
+
+                    // Guardar el PDF en la ubicación elegida
+                    byte[] pdfBytes = null;
+                    try {
+                        pdfBytes = JasperExportManager.exportReportToPdf(jasperPrint);
+                    } catch (JRException e) {
+                        throw new RuntimeException(e);
+                    }
+                    try (FileOutputStream fos = new FileOutputStream(fileToSave)) {
+                        fos.write(pdfBytes);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    System.out.println("PDF guardado en: " + fileToSave.getAbsolutePath());
+                }
+
             }
             campos.clear();
             valores.clear();
