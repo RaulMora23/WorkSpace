@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "748362003820",
+    "firebase_url": "https://fir-bbdd-e6698-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "fir-bbdd-e6698",
+    "storage_bucket": "fir-bbdd-e6698.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748362003820:android:635ad3dcc253abb309af49",
+        "android_client_info": {
+          "package_name": "com.example.firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYZwoJgkuCMBRlqMHnOrXXyAj9TOdS7RE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748362003820:android:223623374ad092c009af49",
+        "android_client_info": {
+          "package_name": "com.example.list"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYZwoJgkuCMBRlqMHnOrXXyAj9TOdS7RE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

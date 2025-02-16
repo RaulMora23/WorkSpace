@@ -41,6 +41,7 @@ public class LibroAdapter extends RecyclerView.Adapter<LibroAdapter.ViewHolder> 
      * @param position Posición del libro en la lista.
      */
     @Override
+    // A
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Libro libro = listaLibros.get(holder.getAdapterPosition());
         holder.tvTitulo.setText(libro.getTitulo());
