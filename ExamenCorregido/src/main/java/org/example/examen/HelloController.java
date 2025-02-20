@@ -146,28 +146,11 @@ public class HelloController {
      *
      * @throws IOException Si ocurre un error al abrir el archivo de ayuda.
      */
-    //No había ayuda ni documentación
+    //No había ayuda ni documentación suficiente
     public void ayuda() throws IOException {
         System.out.println(LocalDate.now());
         Desktop.getDesktop().open(new File("src/main/resources/ayuda.html"));
     }
-    // Me atasqué en la consulta de Juegos porque estaba seguro de que era un natural join,
-    // pero los campos no comparten nombre.
-    // Por algún motivo la consulta me daba error en el order by
-    // que sabía que era imprescindible para luego agrupar por categoría como puede demostrar mi
-    // historial de búsquedas, era un simple join.
-    // En la de ventas la novatada de no parsear a String antes de parametrizar
-    // En conclusión este examen merece un 0 porque ni si quiera pude empezar los informes,
-    // el diseño lo hubiera sacado con su line, su frame, y su border y la ruta relativa de la imagen también,
-    // Debí abrir el pdf de ventas para fijarme en el 00:00 de los datos,
-    // la verdad es que implementé Jasper en la App biblioteca para practicar pero usé listas obtenidas por jdbc(sin usar la consulta del reporte, solo el formato e instancias java) y
-    // el único parámetro que necesité fue un LocalDate que también mostraba el 00:00, aun así no caí haciendo la consulta
-    // lo del group no lo hubiera sacado la verdad no sabía manejar bien la condición de visibilidad de los elementos ni la gestión de agrupaciones, he estado un rato con ello
-    // pero en lo relativo a java: salvo
 
-    // Lo dejo aquí como feedback,
-    // creo que el resultado no arroja un resultado relativo a mi conocimiento de Jasper, de la clase JaspertPrint ni de JavaFX,
-    // aunque hubiese un error en el fxml, sí que refleja bien que de consultas voy flojo,
-    // En cuanto a documentación,
-    // sé con claridad lo que es un javadoc y el aspecto que tiene aunque no recuerde todas las anotaciones y entiendo lo que es una guía de usuario pero no me dio tiempo.
+
 }
