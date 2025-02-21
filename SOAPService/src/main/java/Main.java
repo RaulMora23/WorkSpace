@@ -1,7 +1,9 @@
 import servidor.HiloServicio;
 import servidor.ModeloServicio;
+import servidor.Servicio;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.Endpoint;
 import javax.xml.ws.Service;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -11,11 +13,9 @@ import java.util.Scanner;
 //Añadir vm option
 public class Main {
     public static void main(String[] args) throws InterruptedException, MalformedURLException {
-
-        String ruta = "http://localhost:8080/servicio";
-        // Iniciar servicio en la ruta: ruta
-        Thread hilo = new Thread(new HiloServicio(/*Necesitamos la ruta*/ruta));
-        hilo.start();
+        String ruta = "http://localhost:8080/servidor/";
+        Endpoint.publish(ruta, new Servicio());
+        System.out.println( "Servidor iniciado");
         // Esperamos a que cargue el servidor
         Thread.sleep(3000);
 
@@ -25,7 +25,7 @@ public class Main {
         QName qname = new QName("http://servidor/", "ServicioService");
         //Esta clase establece nuestro punto de acceso al servicio
         Service service = Service.create(url, qname);
-        //Desde nuestra interfaz ModeloServicio almacenamos una implementacion de la clase Servicio
+        //Desde nuestra interfaz ModeloServicio almacenamos una instancia de la clase Servicio
         //Indicamos la interfaz
         ModeloServicio servicio = service.getPort(ModeloServicio.class);
 
