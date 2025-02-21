@@ -14,8 +14,7 @@ public class Cliente {
         try {
             // Conectar al servidor FTP
             ftp.connect("localhost", 21); // Servidor y puerto
-            if (ftp.login("usuario", "contraseña")) { // Autenticación
-                System.out.println("Conexión exitosa.");
+            if (ftp.login("user", "user")) { // Autenticación
 
                 // Modo pasivo (evita problemas con firewalls)
                 ftp.enterLocalPassiveMode();
