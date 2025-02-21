@@ -13,7 +13,7 @@ public class Cliente {
             //Tuberías con el servidor
             BufferedReader lectura = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             BufferedWriter escritura = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            //Hilo de lectura
+            //Hilo de lecturascritura.wri
             new Thread(() -> {
                 try {
                     String linea;

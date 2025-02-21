@@ -7,7 +7,7 @@ import java.rmi.registry.Registry;
 
 public class Main {
     public static void main(String[] args) throws RemoteException, AlreadyBoundException {
-        System.getProperties().put("java.rmi.server.hostname","localhost");
+        System.getProperties().put("","localhost");
         Registry registry = LocateRegistry.createRegistry(5000);
         Implementacion imp = new Implementacion();
         registry.bind("inventario",imp);
