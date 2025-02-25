@@ -21,7 +21,6 @@ public class DAOLibros {
         values.put(Utilidades.Campo_Titulo, titulo);
         values.put(Utilidades.Campo_Autor, autor);
         long idResultante = db.insert(Utilidades.Tabla_Libro, Utilidades.Campo_ISBN, values);
-
         Toast.makeText(context, "ID Resultante: " + idResultante, Toast.LENGTH_SHORT).show();
     }
     public LibroDTO buscarLibro(String isbn){

@@ -1,31 +1,24 @@
-package com.example.examen2;
+package com.example.libreriapancho;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
 /**
  * Adaptador para gestionar una lista de libros en un RecyclerView.
  */
-public class LibroAdapter extends RecyclerView.Adapter<LibroAdapter.ViewHolder> {
+public class Adaptador extends RecyclerView.Adapter<Adaptador.ViewHolder> {
     private List<Libro> listaLibros; // Lista de libros a mostrar
-
-    private Context contexto;
 
     /**
      * Constructor del adaptador.
      * @param listaLibros Lista de libros a gestionar.
      */
-    public LibroAdapter(List<Libro> listaLibros, Context contexto) {
-        //Es clave pasarle el contexto como parámetro para poder instanciar el dao
-        this.contexto = contexto;
+    public Adaptador(List<Libro> listaLibros) {
         this.listaLibros = listaLibros;
     }
 
@@ -48,30 +41,48 @@ public class LibroAdapter extends RecyclerView.Adapter<LibroAdapter.ViewHolder> 
      * @param position Posición del libro en la lista.
      */
     @Override
-    //Bindeamos cada elemento de la lista con su vista
+    // A
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Libro libro = listaLibros.get(holder.getAdapterPosition());
         holder.tvTitulo.setText(libro.getTitulo());
         holder.tvAutor.setText(libro.getAutor());
-        holder.tvAno.setText(""+libro.getAnoPublicacion());
-        holder.tvGenero.setText(libro.getGenero());
+        holder.tvISBN.setText(libro.getISBN());
+        holder.tvDescripcion.setText(libro.getDescripcion());
+        holder.tvFavorito.setText(libro.isFavorito()); // Corrige el problema de tipo boolean
 
         // Configura el botón de eliminar
         holder.btEliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Instanciamos dao
-                DAOLibros daoLibros = new DAOLibros(contexto);
-                //Eliminar de la bbdd
-                daoLibros.eliminarLibro(listaLibros.get(holder.getAdapterPosition()).getId());
-                //Eliminar de la lista
                 listaLibros.remove(holder.getAdapterPosition());
-                //Notificar cambios al RV
                 notifyItemRemoved(holder.getAdapterPosition()); // Notifica la eliminación
                 notifyItemRangeChanged(holder.getAdapterPosition(), listaLibros.size()); // Ajusta las posiciones restantes
             }
         });
 
+        // Configura el botón de modificar
+        holder.btModificar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.btModificar.getText().toString().equals("Modificar")) {
+                    // Habilita los campos para su edición
+                    holder.tvTitulo.setEnabled(true);
+                    holder.tvAutor.setEnabled(true);
+                    holder.tvISBN.setEnabled(true);
+                    holder.tvDescripcion.setEnabled(true);
+                    holder.tvFavorito.setEnabled(true);
+                    holder.btModificar.setText("Guardar");
+                } else {
+                    // Deshabilita los campos y vuelve al estado original
+                    holder.tvTitulo.setEnabled(false);
+                    holder.tvAutor.setEnabled(false);
+                    holder.tvISBN.setEnabled(false);
+                    holder.tvDescripcion.setEnabled(false);
+                    holder.tvFavorito.setEnabled(false);
+                    holder.btModificar.setText("Modificar");
+                }
+            }
+        });
     }
 
     /**
@@ -83,15 +94,11 @@ public class LibroAdapter extends RecyclerView.Adapter<LibroAdapter.ViewHolder> 
         return listaLibros.size();
     }
 
-    public List<Libro> getListaLibros() {
-        return listaLibros;
-    }
-
     /**
      * Clase interna que representa la vista de cada elemento en el RecyclerView.
      */
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvTitulo, tvAutor, tvAno, tvGenero, btEliminar;
+        TextView tvTitulo, tvAutor, tvISBN, tvFavorito, tvDescripcion, btEliminar, btModificar;
 
         /**
          * Constructor del ViewHolder.
@@ -99,11 +106,13 @@ public class LibroAdapter extends RecyclerView.Adapter<LibroAdapter.ViewHolder> 
          */
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvTitulo = itemView.findViewById(R.id.tvISBN);
-            tvAutor = itemView.findViewById(R.id.tvTitulo);
-            tvAno = itemView.findViewById(R.id.tvAutor);
-            tvGenero = itemView.findViewById(R.id.tvDescripcion);
+            tvTitulo = itemView.findViewById(R.id.tvTitulo);
+            tvAutor = itemView.findViewById(R.id.tvAutor);
+            tvISBN = itemView.findViewById(R.id.tvISBN);
+            tvFavorito = itemView.findViewById(R.id.tvFavorito);
+            tvDescripcion = itemView.findViewById(R.id.tvDescripcion);
             btEliminar = itemView.findViewById(R.id.btEliminar);
+            btModificar = itemView.findViewById(R.id.btModificar);
         }
     }
 }

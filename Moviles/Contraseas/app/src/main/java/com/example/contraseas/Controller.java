@@ -24,7 +24,6 @@ public class Controller extends AppCompatActivity {
         etContrasena = findViewById(R.id.etContrasena);
         imagen = findViewById(R.id.imageView);
         sP = getSharedPreferences("contraseñas", MODE_PRIVATE);
-        Map<String, ?> mapa =sP.getAll();
     }
     public void registrar(View view) {
         String nombre = etNombre.getText().toString();

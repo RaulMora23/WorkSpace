@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
         //Recogemos los nodos de la vista
@@ -36,11 +35,16 @@ public class MainActivity extends AppCompatActivity {
         //Configuramos el RV
         RecyclerView rv = findViewById(R.id.rV);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        LibroAdapter adapter = new LibroAdapter(libros,this);
+        adapter = new LibroAdapter(libros,this);
         rv.setAdapter(adapter);
 
         //Instanciamos el Dao
         dao = new DAOLibros(this);
+        for(Libro libro : dao.getLibros()){
+            adapter.getListaLibros().add(libro);
+        }
+        adapter.notifyDataSetChanged();
+
     }
     public void crearLibro(View view) {
         Libro libro= null;

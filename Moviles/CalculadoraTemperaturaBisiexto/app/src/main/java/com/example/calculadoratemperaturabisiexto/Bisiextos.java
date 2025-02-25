@@ -27,5 +27,8 @@ public class Bisiextos extends AppCompatActivity {
             tvResultadoAño.setText("El año no es bisiesto");
         }
     }
+    public void volver(View view){
+        finish();
+    }
 }
 

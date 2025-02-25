@@ -5,9 +5,6 @@ import android.view.View;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +13,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     List<Libro> libros = new ArrayList<>();
-    LibroAdapter adapter = new LibroAdapter(libros);
+    Adaptador adapter = new Adaptador(libros);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         libros.add(new Libro("978-0-7432-7356-5", "1984", "George Orwell", true, "Distopía futurista sobre el totalitarismo."));
         RecyclerView rv = findViewById(R.id.recyclerView);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        LibroAdapter adapter = new LibroAdapter(libros);
         rv.setAdapter(adapter);
     }
     public void crearLibro(View view) {

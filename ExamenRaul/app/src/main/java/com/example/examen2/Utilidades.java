@@ -12,10 +12,10 @@ public class Utilidades {
 
 
     public static final String Crear_tabla_Libro = "CREATE TABLE " + Tabla_Libro + " ("
-            + "ID" + " INTEGER PRIMARY KEY AUTOINCREMENT "
+            + "ID" + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + Campo_Titulo + " TEXT NOT NULL, "
             + Campo_Autor + " TEXT NOT NULL, "
-            + Campo_Genero + " TEXT NOT NULL "
+            + Campo_Genero + " TEXT NOT NULL, "
             + Campo_Ano + " INTEGER NOT NULL "
             + ");";
 }

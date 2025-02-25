@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     public void crearFichero(View view) throws IOException {
         String nombreFichero = etNombre.getText().toString();
         File fichero = new File(getFilesDir(), nombreFichero);
+        etContenido.setText("");
+        etContenido.setHint("Escribe tu contenido...");
         fichero.createNewFile();
     }
     public void leerFichero(View view) throws IOException {

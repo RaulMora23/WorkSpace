@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DAOLibros {
     MyDataBaseHelper con;
     SQLiteDatabase db;
@@ -45,6 +48,14 @@ public class DAOLibros {
         }else {
             Toast.makeText(context, "Isbn no Encontrado", Toast.LENGTH_SHORT).show();
         }
+    }
+    public List<Libro> getLibros(){
+        ArrayList<Libro> libros = new ArrayList<>();
+        Cursor cursor = db.query(Utilidades.Tabla_Libro,null,null,null,null,null,null);
+        while (cursor.moveToNext()){
+            libros.add(new Libro(cursor.getLong(0),cursor.getString(1),cursor.getString(2),cursor.getInt(4),cursor.getString(3)));
+        }
+        return libros;
     }
 
 }
