@@ -3,6 +3,7 @@ package com.example.firebase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,13 +44,22 @@ public class MainActivity extends AppCompatActivity {
         list = findViewById(R.id.list);
         array = new ArrayList<>();
         //Crear adaptador con la vista y el array
-        adapter = new ArrayAdapter<>(this, R.layout.lista, array);
+        adapter = new ArrayAdapter<String>(this, R.layout.lista, array);
         //Unir adaptador y ListView
         list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //Eliminar nota seleccionada
+                array.remove(position);
+                adapter.notifyDataSetChanged();
+                dbRef.getRef().child(String.valueOf(id)).removeValue();
+            }
+        });
         // Inicializar Firebase con la URL de la base de datos en tu perfil de Firebase
         database = FirebaseDatabase.getInstance("https://fir-bbdd-e6698-default-rtdb.europe-west1.firebasedatabase.app");
         //Para leer el nodo "notas", es decir sus hijos
-        dbRef = database.getReference("notas");
+        dbRef = database.getReference("notas2");
         dbRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
