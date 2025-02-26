@@ -1,6 +1,6 @@
-package repos;
+package org.example.examenspring.repos;
 
-import entidades.Producto;
+import org.example.examenspring.entidades.Producto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

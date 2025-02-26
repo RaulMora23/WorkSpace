@@ -1,15 +1,13 @@
-package entidades;
+package org.example.examenspring.entidades;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 
 
 @Entity
-@Table(name = "productos")
+@Table(name = "producto")
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

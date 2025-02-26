@@ -1,6 +1,6 @@
-package repos;
+package org.example.examenspring.repos;
 
-import entidades.Cliente;
+import org.example.examenspring.entidades.Cliente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,16 +1,15 @@
-package controladores;
+package org.example.examenspring.controladores;
 
-import dto.DevolucioneDto;
-import entidades.Devolucione;
+import org.example.examenspring.dto.DevolucioneDto;
+import org.example.examenspring.entidades.Devolucione;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import repos.DevolucioneRepository;
-import servicio.Servicio;
+import org.example.examenspring.repos.DevolucioneRepository;
+import org.example.examenspring.servicio.Servicio;
 
 @RestController
 @RequestMapping("/devolucion")

@@ -1,15 +1,15 @@
-package controladores;
+package org.example.examenspring.controladores;
 
-import dto.CompraDto;
-import entidades.Compra;
+import org.example.examenspring.dto.CompraDto;
+import org.example.examenspring.entidades.Compra;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import repos.CompraRepository;
-import servicio.Servicio;
+import org.example.examenspring.repos.CompraRepository;
+import org.example.examenspring.servicio.Servicio;
 
 @RestController
 @RequestMapping("/compra")
@@ -24,7 +24,6 @@ public class CompraControler {
     @PostMapping
     public ResponseEntity<Compra> realizarCompra(@RequestBody CompraDto dto){
         if(servicio.validarCompra(dto)){
-            servicio.crearDeDto(dto);
             return ResponseEntity.ok(repository.save(servicio.crearDeDto(dto)));
         }else{
             return ResponseEntity.badRequest().build();

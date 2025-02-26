@@ -1,17 +1,17 @@
-package servicio;
+package org.example.examenspring.servicio;
 
-import dto.CompraDto;
-import dto.DevolucioneDto;
-import dto.ProductoDto;
-import entidades.Compra;
-import entidades.Devolucione;
-import entidades.Producto;
+import org.example.examenspring.dto.CompraDto;
+import org.example.examenspring.dto.DevolucioneDto;
+import org.example.examenspring.dto.ProductoDto;
+import org.example.examenspring.entidades.Compra;
+import org.example.examenspring.entidades.Devolucione;
+import org.example.examenspring.entidades.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import repos.ClienteRepository;
-import repos.CompraRepository;
-import repos.DevolucioneRepository;
-import repos.ProductoRepository;
+import org.example.examenspring.repos.ClienteRepository;
+import org.example.examenspring.repos.CompraRepository;
+import org.example.examenspring.repos.DevolucioneRepository;
+import org.example.examenspring.repos.ProductoRepository;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -94,5 +94,14 @@ public class Servicio {
         producto.setPrecio(productoDto.getPrecio());
         producto.setStock(productoDto.getStock());
         return producto;
+    }
+    public CompraDto crearCompraDto(Compra compra){
+        return new CompraDto(compra.getId(),compra.getCliente().getId(),compra.getProducto().getId(),compra.getFecha(),compra.getImporte(),compra.getCantidad());
+    }
+    public DevolucioneDto crearDeDto(Devolucione devolucione){
+        return new DevolucioneDto(devolucione.getId(),devolucione.getCliente().getId(),devolucione.getProducto().getId(),devolucione.getFecha(),devolucione.getCantidad(),devolucione.getMotivo());
+    }
+    public ProductoDto crearProductoDto(Producto producto){
+        return new ProductoDto(producto.getId(),producto.getNombre(),producto.getDescripcion(),producto.getPrecio(),producto.getStock());
     }
 }

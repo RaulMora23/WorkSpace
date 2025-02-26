@@ -1,16 +1,12 @@
-package entidades;
+package org.example.examenspring.entidades;
 
-import dto.CompraDto;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
-
 @Entity
-@Table(name = "compras")
-public class Compra implements Comparable<Compra>{
+@Table(name = "devolucion")
+public class Devolucione {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -27,11 +23,11 @@ public class Compra implements Comparable<Compra>{
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    @Column(name = "importe")
-    private Float importe;
-
     @Column(name = "cantidad")
     private Integer cantidad;
+
+    @Column(name = "motivo", length = 200)
+    private String motivo;
 
     public Integer getId() {
         return id;
@@ -65,14 +61,6 @@ public class Compra implements Comparable<Compra>{
         this.fecha = fecha;
     }
 
-    public Float getImporte() {
-        return importe;
-    }
-
-    public void setImporte(Float importe) {
-        this.importe = importe;
-    }
-
     public Integer getCantidad() {
         return cantidad;
     }
@@ -81,13 +69,11 @@ public class Compra implements Comparable<Compra>{
         this.cantidad = cantidad;
     }
 
-    @Override
-    public int compareTo(Compra o) {
-        Compra compra = (Compra) o;
-        if(this.getFecha().isAfter(compra.getFecha())){
-            return 1;
-        }else{
-            return -1;
-        }
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
     }
 }
